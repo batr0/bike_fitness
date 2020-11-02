@@ -3,18 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:bike_fitness/boxes.dart';
+import 'package:bike_fitness/widgets.dart';
 
 
 
-class speedGraph extends StatefulWidget {
-  speedGraph({Key key, this.title}) : super(key: key);
-  final String title;
-  @override
-  _speedGraphState createState() => _speedGraphState();
-}
+
+
 
 class PowerData {
-  final int  time;
+  final double  time;
   final double watt;
   final charts.Color color;
 
@@ -33,6 +30,15 @@ class LiveData {
       r: color.red, g: color.green, b: color.blue, a: color.alpha);
 }
 
+
+class speedGraph extends StatefulWidget {
+  speedGraph({Key key, this.title}) : super(key: key);
+  final String title;
+
+  @override
+  _speedGraphState createState() => _speedGraphState();
+}
+
 class _speedGraphState extends State<speedGraph> {
   var _spd = BoxSpeed.spd;
 
@@ -46,7 +52,7 @@ class _speedGraphState extends State<speedGraph> {
       charts.Series(
         domainFn: (LiveData clickData, _) => clickData.title,
         colorFn: (LiveData clickData, _) => clickData.color,
-        measureFn: (LiveData , _) => 100,
+        measureFn: (LiveData segment, _) => segment.input,
         id: 'Clicks',
         data: data,
       ),
@@ -55,8 +61,12 @@ class _speedGraphState extends State<speedGraph> {
     var chart = charts.PieChart(
       series,
       animate: true,
+
         defaultRenderer: new charts.ArcRendererConfig(
-            arcWidth: 30, startAngle: 4 / 5 * pi, arcLength: 7 / 5 * pi));
+            arcWidth: 30, startAngle: 4 / 5 * pi, arcLength: 7 / 5 * pi),
+
+
+    );
 
 
     var chartWidget = Padding(
@@ -154,12 +164,13 @@ class powerGraph extends StatefulWidget {
 class _powerGraphState extends State<powerGraph> {
   var _pwr = BoxPower.pwr;
 
+
   @override
   Widget build(BuildContext context) {
     var data = [
-      new PowerData(1, BoxPower.pwr/4,Colors.teal[400]),
-      new PowerData(2, BoxPower.pwr/2,Colors.teal[400]),
-      new PowerData(3, BoxPower.pwr,Colors.teal[400]),
+      new PowerData(0.5*BoxPower.pwr, BoxPower.pwr/4,Colors.teal[400]),
+      new PowerData(1.0*BoxPower.pwr, BoxPower.pwr/2,Colors.teal[400]),
+      new PowerData(1.5*BoxPower.pwr , BoxPower.pwr,Colors.teal[400]),
     ];
 
     var series = [
@@ -175,6 +186,15 @@ class _powerGraphState extends State<powerGraph> {
     var chart = charts.LineChart(
       series,
       animate: true,
+      primaryMeasureAxis: new charts.NumericAxisSpec(
+        tickProviderSpec: new charts.StaticNumericTickProviderSpec(
+          <charts.TickSpec<num>>[
+            charts.TickSpec<num>(0),
+            charts.TickSpec<num>(50),
+            charts.TickSpec<num>(100),
+          ],
+        ),
+      ),
     );
 
     var chartWidget = Padding(
@@ -214,7 +234,8 @@ class batteryGraph extends StatefulWidget {
 
 
 class _batteryGraphState extends State<batteryGraph> {
-  var  _bat = BoxBattery.bat;
+  var _bat = BoxBattery.bat;
+
 
   @override
   Widget build(BuildContext context) {
@@ -236,6 +257,15 @@ class _batteryGraphState extends State<batteryGraph> {
       series,
       animate: true,
       vertical: false,
+      primaryMeasureAxis: new charts.NumericAxisSpec(
+        tickProviderSpec: new charts.StaticNumericTickProviderSpec(
+          <charts.TickSpec<num>>[
+            charts.TickSpec<num>(0),
+            charts.TickSpec<num>(50),
+            charts.TickSpec<num>(100),
+          ],
+        ),
+      ),
     );
 
     var chartWidget = Padding(
@@ -245,6 +275,7 @@ class _batteryGraphState extends State<batteryGraph> {
         child: chart,
       ),
     );
+
 
     return Container(
       width: 400,
@@ -295,6 +326,7 @@ class _tempGraphState extends State<tempGraph> {
       vertical: false,
     );
 
+
     var chartWidget = Padding(
       padding: EdgeInsets.all(0.5),
       child: SizedBox(
@@ -316,3 +348,4 @@ class _tempGraphState extends State<tempGraph> {
     );
   }
 }
+

@@ -91,10 +91,10 @@ class TabBarDemo extends StatelessWidget {
 
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
+                      batteryGraph(),
                       speedGraph(),
                       distGraph(),
                       powerGraph(),
-                      batteryGraph(),
                       tempGraph(),
                     ],
                   )
