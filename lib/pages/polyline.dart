@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 import 'package:bike_fitness/coffee.dart';
-
+import 'package:bike_fitness/sensorData.dart';
 import '../widgets/drawer.dart';
 
 class PolylinePage extends StatelessWidget {
@@ -43,6 +43,11 @@ class PolylinePage extends StatelessWidget {
                           points: webMSC,
                           strokeWidth: 4.0,
                           color: Colors.redAccent[200]),
+
+                      Polyline(
+                          points: sensorData,
+                          strokeWidth: 4.0,
+                          color: Colors.tealAccent[200]),
                     ],
                   )
                 ],
