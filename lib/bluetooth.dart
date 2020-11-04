@@ -17,13 +17,16 @@ class FlutterBlueApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.blueGrey[800], //Changing this will change the color of the TabBar
         accentColor: Colors.yellow[700],
         backgroundColor:  Colors.blueGrey[50],
       ),
+
       home: StreamBuilder<BluetoothState>(
+
           stream: FlutterBlue.instance.state,
           initialData: BluetoothState.unknown,
           builder: (c, snapshot) {
@@ -32,6 +35,7 @@ class FlutterBlueApp extends StatelessWidget {
               return FindDevicesScreen();
             }
             return BluetoothOffScreen(state: state);
+
           }),
     );
   }
@@ -73,6 +77,7 @@ class FindDevicesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Bluetooth Devices')),
       backgroundColor: Colors.blueGrey[50],
       body: RefreshIndicator(
         onRefresh: () =>
