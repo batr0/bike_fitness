@@ -13,7 +13,12 @@ class support extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(title: Text('FAQ and Support')),
+        appBar: AppBar(title: Text('FAQ and Support'),  ////BACK BUTTON FOR SUPPORT
+                leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () => Navigator.of(context).pop(),
+        ),
+        ),
         body: Container(
           child: Center(
             child: _myWidget(context),
@@ -30,13 +35,13 @@ Widget _myWidget(BuildContext context) {
   print(myString);
   return Card(
         child:GestureDetector(
-          onTap: () => _launchURL(),
+         // onTap: () => _launchURL(),
          // padding: EdgeInsets.all(24.0),
           child: Text(myString),
         ),
   );
 }
-
+/*
 _launchURL() async {
   const url = 'https://github.com/batr0/bike_fitness';
   if (await canLaunch(url)) {
@@ -45,3 +50,5 @@ _launchURL() async {
     throw 'Could not launch $url';
   }
 }
+
+ */
