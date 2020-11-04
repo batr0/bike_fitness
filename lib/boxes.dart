@@ -24,7 +24,11 @@ class _BoxSpeedState extends State<BoxSpeed> {
                  onPressed: (){
                  setState(() {
                    BoxSpeed.spd--;
+                   if ( BoxSpeed.spd <0)
+                     BoxSpeed.spd=0;
                    _spd--;
+                   if ( _spd <0)
+                     _spd=0;
                 });
                }
               ),
@@ -36,7 +40,11 @@ class _BoxSpeedState extends State<BoxSpeed> {
                 onPressed: (){
                 setState(() {
                   BoxSpeed.spd++;
+                  if ( BoxSpeed.spd <0)
+                    BoxSpeed.spd=0;
                   _spd++;
+                  if ( _spd >100)
+                    _spd=100;
                 });
                 }
               ),
@@ -68,8 +76,13 @@ class _BoxDistanceState extends State<BoxDistance> {
                 child: Icon(Icons.arrow_downward),
                 onPressed: (){
                   setState(() {
-                  _dist--;
-                  BoxDistance.dist--;
+
+                    BoxDistance.dist--;
+                    if (BoxDistance.dist <0)
+                      BoxDistance.dist=0;
+                    _dist--;// distance starts 0 goes on for long time
+                    if ( _dist <0)
+                      _dist=0;
                   });
                 }
             ),
@@ -121,7 +134,11 @@ var _pwr = BoxPower.pwr;
                 onPressed: (){
                   setState(() {
                     BoxPower.pwr--;
+                    if (BoxPower.pwr <0)
+                      BoxPower.pwr=0; // power range bottom 0
                     _pwr--;
+                    if (_pwr <0)
+                      _pwr=0;
                   });
                 }
             ),
@@ -173,7 +190,12 @@ var  _bat = BoxBattery.bat;
                 onPressed: (){
                   setState(() {
                     BoxBattery.bat--;
+                    if (BoxBattery.bat <0)
+                      BoxBattery.bat=0;
                     _bat--;
+                    if (_bat <0)
+                      _bat=0;
+
                   });
                 }
             ),
@@ -183,7 +205,11 @@ var  _bat = BoxBattery.bat;
                 onPressed: (){
                   setState(() {
                     BoxBattery.bat++;
+                    if (BoxBattery.bat >100) // range from 0-100 battery
+                      BoxBattery.bat=100;
                     _bat++;
+                    if(_bat>100)
+                      _bat=100;
                   });
                 }
             ),
@@ -231,7 +257,7 @@ var _temp =   BoxTemp.temp;
                 onPressed: (){
                   setState(() {
                     BoxTemp.temp++;
-                    _temp++;
+                    _temp++; // temp can be negative and positive
                   });
                 }
             ),
