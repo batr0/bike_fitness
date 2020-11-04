@@ -144,7 +144,7 @@ class _distGraphState extends State<distGraph> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             new  Text("Distance: $_dist KM", style: TextStyle(color: Colors.blueGrey[700])),
-            chartWidget,
+            //chartWidget,
           ],
         ),
       );
@@ -237,19 +237,36 @@ class _batteryGraphState extends State<batteryGraph> {
   var _bat = BoxBattery.bat;
 
 
+
   @override
   Widget build(BuildContext context) {
     var data = [
-      LiveData('', BoxBattery.bat, Colors.green[500]),
+      LiveData('', BoxBattery.bat, Colors.transparent),
     ];
 
     var series = [
       charts.Series(
+          id: 'Clicks',
+          data: data,
         domainFn: (LiveData clickData, _) => clickData.title,
         measureFn: (LiveData clickData, _) => clickData.input,
-        colorFn: (LiveData clickData, _) => clickData.color,
-        id: 'Clicks',
-        data: data,
+        // ignore: missing_return
+        colorFn: (LiveData clickData, _) {
+            //RANGE COLOR BATTERY
+            if(BoxBattery.bat<=100 && BoxBattery.bat>=75) {
+              return charts.ColorUtil.fromDartColor(Colors.green[500]);
+            }
+            else if(BoxBattery.bat<75 && BoxBattery.bat>=50) {
+              return charts.ColorUtil.fromDartColor(Colors.yellow[700]);
+            }
+            else if(BoxBattery.bat<50 && BoxBattery.bat>=25) {
+              return charts.ColorUtil.fromDartColor(Colors.orange[500]);
+            }
+            else if(BoxBattery.bat<25 && BoxBattery.bat>=0) {
+              return charts.ColorUtil.fromDartColor(Colors.pink[700]);
+            }
+        }
+
       ),
     ];
 
@@ -261,7 +278,6 @@ class _batteryGraphState extends State<batteryGraph> {
         tickProviderSpec: new charts.StaticNumericTickProviderSpec(
           <charts.TickSpec<num>>[
             charts.TickSpec<num>(0),
-            charts.TickSpec<num>(50),
             charts.TickSpec<num>(100),
           ],
         ),
@@ -281,8 +297,11 @@ class _batteryGraphState extends State<batteryGraph> {
       width: 400,
       //color: Colors.grey[400],
       child: new Column(
+
         mainAxisAlignment: MainAxisAlignment.center,
+
         children: <Widget>[
+
           new  Text("Battery: $_bat %", style: TextStyle(color: Colors.blueGrey[700])),
           chartWidget,
         ],
@@ -342,7 +361,7 @@ class _tempGraphState extends State<tempGraph> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text("Temperature: $_temp °F", style: TextStyle(color: Colors.blueGrey[700])),
-          chartWidget,
+        //  chartWidget,
         ],
       ),
     );

@@ -74,9 +74,9 @@ class TabBarDemo extends StatelessWidget {
 
                     children: <Widget>[
                       BoxSpeed(),
-                      BoxDistance(),
                       BoxPower(),
                       BoxBattery(),
+                      BoxDistance(),
                       BoxTemp(),
                     ],
                   )
@@ -91,10 +91,10 @@ class TabBarDemo extends StatelessWidget {
 
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      batteryGraph(),
                       speedGraph(),
-                      distGraph(),
                       powerGraph(),
+                      batteryGraph(),
+                      distGraph(),
                       tempGraph(),
                     ],
                   )
