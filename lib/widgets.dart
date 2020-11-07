@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:bike_fitness/boxes.dart';
 
 
 class ScanResultTile extends StatelessWidget {
@@ -86,6 +87,7 @@ class ScanResultTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return ExpansionTile(
       title: _buildTitle(context),
       leading: Text(result.rssi.toString()),
@@ -183,7 +185,7 @@ class CharacteristicTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('Characteristic'),
+                Text(characteristic.uuid.toString().toUpperCase().substring(4, 8)),
                 Text(
                     '0x${characteristic.uuid.toString().toUpperCase().substring(4, 8)}',
                     style: Theme.of(context).textTheme.body1.copyWith(
@@ -215,7 +217,7 @@ class CharacteristicTile extends StatelessWidget {
                         ? Icons.sync_disabled
                         : Icons.sync,
                     color: Theme.of(context).iconTheme.color.withOpacity(0.5)),
-                onPressed: onNotificationPressed,
+                onPressed: extract,
               )
             ],
           ),
@@ -224,8 +226,18 @@ class CharacteristicTile extends StatelessWidget {
       },
     );
   }
+  void extract (){ // double action button extractamundo
+    onNotificationPressed();
+    if(characteristic.uuid.toString().toUpperCase().substring(4, 8) == '2A19'){
+      //if statement working
+      double realBatt = characteristic.lastValue[0].toDouble();
+      BoxBattery.bat = realBatt;
+    }
+  }
 }
-
+//characteristic.uuid.toString().toUpperCase().substring(4, 8) == 2A19
+//value== battery
+//characteristic.lastValue == BATTERY BATERRY
 class DescriptorTile extends StatelessWidget {
   final BluetoothDescriptor descriptor;
   final VoidCallback onReadPressed;
@@ -301,3 +313,4 @@ class AdapterStateTile extends StatelessWidget {
     );
   }
 }
+
