@@ -45,7 +45,6 @@ class PolylinePage extends StatelessWidget {
                           points: sensorData,
                           strokeWidth: 4.0,
                           color: Colors.teal[200]),
-
                     ],
                   )
                 ],
