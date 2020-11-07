@@ -1,7 +1,6 @@
 // Copyright 2017, Paul DeMarco.
 // All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 
@@ -191,6 +190,7 @@ class CharacteristicTile extends StatelessWidget {
                         color: Theme.of(context).textTheme.caption.color))
               ],
             ),
+
             subtitle: Text(value.toString()),
             contentPadding: EdgeInsets.all(0.0),
           ),
@@ -255,6 +255,7 @@ class DescriptorTile extends StatelessWidget {
         initialData: descriptor.lastValue,
         builder: (c, snapshot) => Text(snapshot.data.toString()),
       ),
+
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[

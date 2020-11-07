@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:bike_fitness/boxes.dart';
@@ -368,3 +369,100 @@ class _tempGraphState extends State<tempGraph> {
   }
 }
 
+
+
+class gridGraph extends StatefulWidget {
+gridGraph({Key key, this.title}) : super(key: key);
+final String title;
+
+@override
+_gridGraphState createState() => _gridGraphState();
+}
+
+class _gridGraphState extends State<gridGraph> {
+  var _spd = BoxSpeed.spd;
+  var _temp =   BoxTemp.temp;
+  var _bat = BoxBattery.bat;
+  var _dist = BoxDistance.dist;
+  var _pwr = BoxPower.pwr;
+
+  Widget build(BuildContext context) {
+    return  GridView.count(
+        shrinkWrap: true,
+        crossAxisCount: 2 ,
+        mainAxisSpacing:5,
+        crossAxisSpacing: 5,
+        padding: EdgeInsets.all(5),
+        children:<Widget>[
+          Card(
+              color: Colors.blueGrey[800],
+               child: Column(
+               children:<Widget>[
+                 Expanded(
+                   flex: 2,
+                   child: FittedBox(
+                       alignment: Alignment.bottomCenter,
+                       fit: BoxFit.contain,
+                       child:Text(" $_spd ",  style: TextStyle(color: Colors.yellow[700]))),
+                 ),
+                     Expanded(
+                       child:   Text("KM/h",  style: TextStyle(color: Colors.blueGrey[50],fontSize: 45),),
+                     ),
+                 ]
+               )
+          ),
+          Card(
+              color: Colors.blueGrey[800],
+              child: Column(
+                  children:<Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: FittedBox(
+                          alignment: Alignment.bottomCenter,
+                          fit: BoxFit.contain,
+                          child:Text(" $_pwr ",  style: TextStyle(color: Colors.yellow[700]))),
+                    ),
+                    Expanded(
+                      child:   Text("Watts",  style: TextStyle(color: Colors.blueGrey[50],fontSize: 45),),
+                    ),
+                  ]
+              )
+          ),
+          Card(
+              color: Colors.blueGrey[800],
+              child: Column(
+                  children:<Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: FittedBox(
+                          alignment: Alignment.bottomCenter,
+                          fit: BoxFit.contain,
+                          child:Text(" $_dist ",  style: TextStyle(color: Colors.yellow[700]))),
+                    ),
+                    Expanded(
+                      child:   Text("KM",  style: TextStyle(color: Colors.blueGrey[50],fontSize: 45),),
+                    ),
+                  ]
+              )
+          ),
+          Card(
+              color: Colors.blueGrey[800],
+              child: Column(
+                  children:<Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: FittedBox(
+                          alignment: Alignment.bottomCenter,
+                          fit: BoxFit.contain,
+                          child:Text(" $_temp ",  style: TextStyle(color: Colors.yellow[700]))),
+                    ),
+                    Expanded(
+                      child:   Text("°F",  style: TextStyle(color: Colors.blueGrey[50],fontSize: 45),),
+                    ),
+                  ]
+              )
+          ),
+        ]
+    );
+  }
+}

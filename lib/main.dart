@@ -1,4 +1,5 @@
 import 'package:bike_fitness/boxes.dart';
+
 import 'package:flutter/material.dart';
 import 'package:bike_fitness/map.dart';
 import 'package:bike_fitness/bluetooth.dart';
@@ -89,13 +90,15 @@ class TabBarDemo extends StatelessWidget {
 
                   child: Column(
 
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      speedGraph(),
-                      powerGraph(),
-                      batteryGraph(),
-                      distGraph(),
-                      tempGraph(),
+                      //speedGraph(),
+                     // powerGraph(),
+                      gridGraph(),
+                     batteryGraph(),
+                     // distGraph(),
+                      //tempGraph(),
+
                     ],
                   )
               ),
