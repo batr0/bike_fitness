@@ -18,10 +18,7 @@ class PolylinePage extends StatelessWidget {
         padding: EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-              child: Text(' Walk from MSC to WEB, Ride to Coffee Shop'),
-            ),
+
             Flexible(
               child: FlutterMap(
                 options: MapOptions(
@@ -47,12 +44,33 @@ class PolylinePage extends StatelessWidget {
                       Polyline(
                           points: sensorData,
                           strokeWidth: 4.0,
-                          color: Colors.tealAccent[200]),
+                          color: Colors.teal[200]),
 
                     ],
                   )
                 ],
               ),
+            ),
+            Padding(
+                padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: Center(
+                    child: Column(
+                        children: [
+                          Text(
+                            'Coffee Ride, Campus to Bryan ',
+                            style: TextStyle(fontSize: 18, color: Colors.purple),
+                          ),
+                          Text(
+                            'WEB to MSC ',
+                            style: TextStyle(fontSize: 18, color:Colors.redAccent[200]),
+                          ),
+                          Text(
+                            'Bike Raw Sensor Data Test',
+                            style: TextStyle(fontSize: 18, color: Colors.teal[200]),
+                          ),
+                        ]
+                    )
+                )
             ),
           ],
         ),
