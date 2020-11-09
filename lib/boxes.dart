@@ -163,7 +163,7 @@ var _pwr = BoxPower.pwr;
 
 
 class BoxBattery extends StatefulWidget {
-  static double bat = 0;
+  static  double bat = 0;
   @override
   _BoxBatteryState createState() =>   _BoxBatteryState();
 }

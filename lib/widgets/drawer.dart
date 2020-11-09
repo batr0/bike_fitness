@@ -15,6 +15,7 @@ import '../pages/plugin_api.dart';
 import '../pages/plugin_scalebar.dart';
 import '../pages/polyline.dart';
 import '../pages/tap_to_add.dart';
+import '../pages/zdata.dart';
 
 Drawer buildDrawer(BuildContext context, String currentRoute) {
   return Drawer(
@@ -53,6 +54,13 @@ Drawer buildDrawer(BuildContext context, String currentRoute) {
           selected: currentRoute == PolylinePage.route,
           onTap: () {
             Navigator.pushReplacementNamed(context, PolylinePage.route);
+          },
+        ),
+        ListTile(
+          title: const Text('Z Data'),
+          selected: currentRoute == MyHomePage.route,
+          onTap: () {
+            Navigator.pushReplacementNamed(context, MyHomePage.route);
           },
         ),
         ListTile(

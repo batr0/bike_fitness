@@ -156,7 +156,7 @@ class ServiceTile extends StatelessWidget {
   }
 }
 
-class CharacteristicTile extends StatelessWidget {
+class CharacteristicTile extends StatefulWidget {
   final BluetoothCharacteristic characteristic;
   final List<DescriptorTile> descriptorTiles;
   final VoidCallback onReadPressed;
@@ -173,10 +173,15 @@ class CharacteristicTile extends StatelessWidget {
       : super(key: key);
 
   @override
+  _CharacteristicTileState createState() => _CharacteristicTileState();
+}
+
+class _CharacteristicTileState extends State<CharacteristicTile> {
+  @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<int>>(
-      stream: characteristic.value,
-      initialData: characteristic.lastValue,
+      stream: widget.characteristic.value,
+      initialData: widget.characteristic.lastValue,
       builder: (c, snapshot) {
         final value = snapshot.data;
         return ExpansionTile(
@@ -185,9 +190,9 @@ class CharacteristicTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(characteristic.uuid.toString().toUpperCase().substring(4, 8)),
+                Text(widget.characteristic.uuid.toString().toUpperCase().substring(4, 8)),
                 Text(
-                    '0x${characteristic.uuid.toString().toUpperCase().substring(4, 8)}',
+                    '0x${widget.characteristic.uuid.toString().toUpperCase().substring(4, 8)}',
                     style: Theme.of(context).textTheme.body1.copyWith(
                         color: Theme.of(context).textTheme.caption.color))
               ],
@@ -204,33 +209,41 @@ class CharacteristicTile extends StatelessWidget {
                   Icons.file_download,
                   color: Theme.of(context).iconTheme.color.withOpacity(0.5),
                 ),
-                onPressed: onReadPressed,
+                onPressed: widget.onReadPressed,
               ),
               IconButton(
                 icon: Icon(Icons.file_upload,
                     color: Theme.of(context).iconTheme.color.withOpacity(0.5)),
-                onPressed: onWritePressed,
+                onPressed: widget.onWritePressed,
               ),
               IconButton(
                 icon: Icon(
-                    characteristic.isNotifying
+                    widget.characteristic.isNotifying
                         ? Icons.sync_disabled
                         : Icons.sync,
                     color: Theme.of(context).iconTheme.color.withOpacity(0.5)),
-                onPressed: extract,
+                onPressed: (){
+                  setState((){
+                    debugPrint(widget.characteristic.lastValue[0].toDouble().toString());
+                    extract();
+                    debugPrint(widget.characteristic.lastValue[0].toDouble().toString());
+                      });
+                  }
               )
             ],
           ),
-          children: descriptorTiles,
+          children: widget.descriptorTiles,
         );
       },
     );
   }
+
   void extract (){ // double action button extractamundo
-    onNotificationPressed();
-    if(characteristic.uuid.toString().toUpperCase().substring(4, 8) == '2A19'){
+    widget.onNotificationPressed();
+    if(widget.characteristic.uuid.toString().toUpperCase().substring(4, 8) == '2A19'){
       //if statement working
-      double realBatt = characteristic.lastValue[0].toDouble();
+      debugPrint('im working correctly 3');
+      double realBatt = widget.characteristic.lastValue[0].toDouble();
       BoxBattery.bat = realBatt;
     }
   }

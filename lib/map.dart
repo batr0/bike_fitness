@@ -15,6 +15,8 @@ import './pages/plugin_api.dart';
 import './pages/plugin_scalebar.dart';
 import './pages/polyline.dart';
 import './pages/tap_to_add.dart';
+import './pages/zdata.dart';
+
 
 
 class MapDisplay extends StatelessWidget {
@@ -36,6 +38,7 @@ class MapDisplay extends StatelessWidget {
     TapToAddPage.route: (context) => TapToAddPage(),
     EsriPage.route: (context) => EsriPage(),
     PolylinePage.route: (context) => PolylinePage(),
+    MyHomePage.route: (context) => MyHomePage(),
     MapControllerPage.route: (context) => MapControllerPage(),
     AnimatedMapControllerPage.route: (context) => AnimatedMapControllerPage(),
     MarkerAnchorPage.route: (context) => MarkerAnchorPage(),
@@ -47,6 +50,7 @@ class MapDisplay extends StatelessWidget {
     MovingMarkersPage.route: (context) => MovingMarkersPage(),
     CirclePage.route: (context) => CirclePage(),
     OverlayImagePage.route: (context) => OverlayImagePage(),
+
    },
   );
  }
