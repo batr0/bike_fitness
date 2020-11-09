@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Stack(children: [
         FlutterMap(
           options: new MapOptions(
-            center: LatLng(30.62734	,	-96.34081667),
+            center: LatLng(30.61973	,	-96.33495	),
             zoom: 14.0,
           ),
           layers: [

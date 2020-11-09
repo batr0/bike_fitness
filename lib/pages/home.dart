@@ -2,8 +2,9 @@ import 'package:bike_fitness/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
-
+import 'package:bike_fitness/heatmap.dart';
 import '../widgets/drawer.dart';
+
 
 class HomePage extends StatelessWidget {
   static const String route = '/';
@@ -75,7 +76,6 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-
       ),
     );
   }

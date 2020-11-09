@@ -403,7 +403,7 @@ class _gridGraphState extends State<gridGraph> {
                    child: FittedBox(
                        alignment: Alignment.bottomCenter,
                        fit: BoxFit.contain,
-                       child:Text(" $_spd ",  style: TextStyle(color: Colors.yellow[700]))),
+                       child:Text(" $_spd ",  style: TextStyle(color: Colors.pink[600]))),
                  ),
                      Expanded(
                        child:   Text("KM/h",  style: TextStyle(color: Colors.blueGrey[50],fontSize: 45),),
@@ -420,7 +420,7 @@ class _gridGraphState extends State<gridGraph> {
                       child: FittedBox(
                           alignment: Alignment.bottomCenter,
                           fit: BoxFit.contain,
-                          child:Text(" $_pwr ",  style: TextStyle(color: Colors.yellow[700]))),
+                          child:Text(" $_pwr ",  style: TextStyle(color: Colors.lightBlue[100]))),
                     ),
                     Expanded(
                       child:   Text("Watts",  style: TextStyle(color: Colors.blueGrey[50],fontSize: 45),),
@@ -437,7 +437,7 @@ class _gridGraphState extends State<gridGraph> {
                       child: FittedBox(
                           alignment: Alignment.bottomCenter,
                           fit: BoxFit.contain,
-                          child:Text(" $_dist ",  style: TextStyle(color: Colors.yellow[700]))),
+                          child:Text(" $_dist ",  style: TextStyle(color: Colors.green[700]))),
                     ),
                     Expanded(
                       child:   Text("KM",  style: TextStyle(color: Colors.blueGrey[50],fontSize: 45),),

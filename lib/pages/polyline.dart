@@ -28,7 +28,7 @@ class PolylinePage extends StatelessWidget {
                 layers: [
                   TileLayerOptions(
                       urlTemplate:
-                          'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                       subdomains: ['a', 'b', 'c']),
                   PolylineLayerOptions(
                     polylines: [
@@ -77,3 +77,4 @@ class PolylinePage extends StatelessWidget {
     );
   }
 }
+

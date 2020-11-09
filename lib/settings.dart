@@ -30,9 +30,10 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
 
       appBar: AppBar(title: Text(title)),
-     backgroundColor:  Colors.blueGrey[50],
 
-   //   body: Image(image: AssetImage('assets/graphics/bike.jpg'), fit: BoxFit.fill,),
+     backgroundColor:  Colors.blueGrey[50],
+      ///add image to the settings pages
+      //body: Image(image: AssetImage('assets/graphics/logo.png'), fit: BoxFit.none,),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
