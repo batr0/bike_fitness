@@ -33,17 +33,36 @@ class support extends StatelessWidget {
 // modify this widget with the example code below
 Widget _myWidget(BuildContext context) {
   //Stream<List<int>> test = CharacteristicTile.characteristic.value;
-  String myString = 'Bike Fitness by Team 47 \n\n https://github.com/batr0/bike_fitness \n\nQ:How do I use the app?\n\nA: First tab is settings, with Bluetooth Setup, Conversions, and other things to get you started. Second tab is live data input from the bike sensors, third tab is charted data from the live input, and fourth is the map displaying the route you rode';
+  String myString = '             Bike Fitness by Team 47 \n\n https://github.com/batr0/bike_fitness\n\n                    Tap to View FAQ';
   print(myString);
   return Card(
-        child:GestureDetector(
-         // onTap: () => _launchURL(),
-         // padding: EdgeInsets.all(24.0),
-          child: Text(myString),
-        ),
+    color: Colors.blueGrey[800],
+    child: GestureDetector(
+      onTap: () => _launchURL(),
+        child:Column(
+          children: [
+            Expanded(
+              flex:1 ,
+              child: FittedBox(
+                  alignment: Alignment.center,
+                  fit: BoxFit.contain,
+                  child: Text(
+                      myString, style: TextStyle(color: Colors.blueGrey[50]))),
+            ),
+            Expanded(
+              flex:2 ,
+              child: FittedBox(
+                  alignment: Alignment.center,
+                  fit: BoxFit.contain,
+                  child: Image.asset((("assets/graphics/bike2.jpg"))),
+              )
+            ),
+          ],
+         )
+    ),
   );
 }
-/*
+
 _launchURL() async {
   const url = 'https://github.com/batr0/bike_fitness';
   if (await canLaunch(url)) {
@@ -53,4 +72,3 @@ _launchURL() async {
   }
 }
 
- */

@@ -54,6 +54,7 @@ flutter:
     assets:
       - assets/graphics/bike.jpg
       - assets/graphics/cstat.png
+      - assets/graphics/bike2.jpg
 
   # To add assets to your application, add an assets section, like this:
   # assets:
