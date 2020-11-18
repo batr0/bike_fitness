@@ -1,6 +1,6 @@
 # Bike Fitness App
 
-Group 47 Bike Computer Application
+Group 47 Bike Phone Application
 
 ## Getting Started
 
