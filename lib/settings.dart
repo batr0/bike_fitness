@@ -1,6 +1,7 @@
 import 'package:bike_fitness/bluetooth.dart';
 import 'package:flutter/material.dart';
 import 'package:bike_fitness/support.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class settings extends StatelessWidget {
   final appTitle = 'Rides and Settings';
@@ -27,13 +28,40 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String myString = '             Bike Fitness by Team 47 \n\n https://github.com/batr0/bike_fitness\n\n                    Tap to View FAQ';
+    print(myString);
     return Scaffold(
 
       appBar: AppBar(title: Text(title)),
 
      backgroundColor:  Colors.blueGrey[50],
       ///add image to the settings pages
-      //body: Image(image: AssetImage('assets/graphics/logo.png'), fit: BoxFit.none,),
+      body:  Card(
+    color: Colors.blueGrey[800],
+      child: GestureDetector(
+          onTap: () => _launchURL(),
+          child:Column(
+            children: [
+              Expanded(
+                flex:1 ,
+                child: FittedBox(
+                    alignment: Alignment.center,
+                    fit: BoxFit.contain,
+                    child: Text(
+                        myString, style: TextStyle(color: Colors.yellow[700]))),
+              ),
+              Expanded(
+                  flex:2 ,
+                  child: FittedBox(
+                    alignment: Alignment.center,
+                    fit: BoxFit.contain,
+                    child: Image.asset((("assets/graphics/bike2.jpg"))),
+                  )
+              ),
+            ],
+          )
+      ),
+    ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
@@ -73,6 +101,7 @@ class MyHomePage extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
+            /*
             ListTile(
               title: Text('Support'),
               onTap: () {
@@ -82,7 +111,7 @@ class MyHomePage extends StatelessWidget {
 
                 );
               },
-            )
+            )*/
           ],
         ),
 
@@ -90,3 +119,13 @@ class MyHomePage extends StatelessWidget {
     );
   }
 }
+
+_launchURL() async {
+  const url = 'https://github.com/batr0/bike_fitness';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
