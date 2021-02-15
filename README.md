@@ -1,6 +1,6 @@
 # Bike Fitness App
 
-Group 47 Bike Computer Application
+Group 47 Bike Phone Application
 
 ## Getting Started
 
@@ -10,7 +10,7 @@ This is the Support Page for the bike_fitness app, currently under construction!
 Below is a how-to on using the app in its current state (11/17/20)
 
 This app uses:
-- [map_elevation] (https://github.com/OwnWeb/map_elevation)
+- [map_elevation](https://github.com/OwnWeb/map_elevation)
 - [flutter_map](https://pub.dev/packages/flutter_map)
 - [flutter_blue](https://github.com/pauldemarco/flutter_blue)
 
