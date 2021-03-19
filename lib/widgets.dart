@@ -279,9 +279,51 @@ class DescriptorTile extends StatelessWidget {
   }
 }
 */
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:bike_fitness/boxes.dart';
+
+
+
+
+StreamController<List<int>>  controller = StreamController<List<int>>.broadcast();
+
+StreamSubscription ss = _CharacteristicTileState().widget.characteristic.value.listen(( data) {
+ //ss.onData((data) { controller.addStream(_CharacteristicTileState().widget.characteristic.value.asBroadcastStream());});
+  controller.addStream(_CharacteristicTileState().widget.characteristic.value);
+/*
+  _CharacteristicTileState().widget.characteristic.value.listen((event) {
+
+  });
+  */
+});
+
+
+Stream<double> tester() async*{
+  yield* Stream.periodic(Duration(seconds: 1), (int a) {
+    //_CharacteristicTileState().widget.onNotificationPressed();
+    //if (CharacteristicTile().characteristic.uuid.toString().toUpperCase().substring(4, 8) == '483E') {
+      return _CharacteristicTileState().widget.characteristic.lastValue[0].toDouble();
+    }
+
+  );
+}
+
+
+Stream<double> _speedData() async* {
+  // ignore: missing_return
+  yield* Stream.periodic(Duration(seconds: 1), (int a) {
+    if (CharacteristicTile().characteristic.uuid.toString().toUpperCase().substring(4, 8) == '483E') {
+      return CharacteristicTile().characteristic.lastValue[0].toDouble();
+    }
+  });
+}
+
+
+//Stream<double> speedStream =_speedData();
+
 
 
 class ScanResultTile extends StatelessWidget {
@@ -468,11 +510,23 @@ class _CharacteristicTileState extends State<CharacteristicTile> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(widget.characteristic.uuid.toString().toUpperCase().substring(4, 8)),
+                Text(widget.characteristic.uuid.toString()
+                    .toUpperCase()
+                    .substring(4, 8)),
                 Text(
-                    '0x${widget.characteristic.uuid.toString().toUpperCase().substring(4, 8)}',
-                    style: Theme.of(context).textTheme.body1.copyWith(
-                        color: Theme.of(context).textTheme.caption.color))
+                    '0x${widget.characteristic.uuid.toString()
+                        .toUpperCase()
+                        .substring(4, 8)}',
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .body1
+                        .copyWith(
+                        color: Theme
+                            .of(context)
+                            .textTheme
+                            .caption
+                            .color))
               ],
             ),
 
@@ -485,27 +539,41 @@ class _CharacteristicTileState extends State<CharacteristicTile> {
               IconButton(
                 icon: Icon(
                   Icons.file_download,
-                  color: Theme.of(context).iconTheme.color.withOpacity(0.5),
+                  color: Theme
+                      .of(context)
+                      .iconTheme
+                      .color
+                      .withOpacity(0.5),
                 ),
                 onPressed: widget.onReadPressed,
               ),
               IconButton(
                 icon: Icon(Icons.file_upload,
-                    color: Theme.of(context).iconTheme.color.withOpacity(0.5)),
+                    color: Theme
+                        .of(context)
+                        .iconTheme
+                        .color
+                        .withOpacity(0.5)),
                 onPressed: widget.onWritePressed,
               ),
               IconButton(
-                icon: Icon(
-                    widget.characteristic.isNotifying
-                        ? Icons.sync_disabled
-                        : Icons.sync,
-                    color: Theme.of(context).iconTheme.color.withOpacity(0.5)),
-                onPressed: (){
-                  setState((){
-                    debugPrint(widget.characteristic.lastValue[0].toDouble().toString());
-                    extract();
-                    debugPrint(widget.characteristic.lastValue[0].toDouble().toString());
-                      });
+                  icon: Icon(
+                      widget.characteristic.isNotifying
+                          ? Icons.sync_disabled
+                          : Icons.sync,
+                      color: Theme
+                          .of(context)
+                          .iconTheme
+                          .color
+                          .withOpacity(0.5)),
+                  onPressed: () {
+                    widget.onNotificationPressed();
+                    debugPrint(widget.characteristic.lastValue.toString());
+                               //debugPrint(widget.characteristic.lastValue.toString());
+                               //debugPrint('this is from the widgests file');
+                               //debugPrint(myList.toString());
+                               // debugPrint(this.widget.characteristic.uuid.toString().toUpperCase().substring(4, 8).toString());
+                               //  debugPrint(this.widget.characteristic.lastValue[0].toString());// 483E value
                   }
               )
             ],
@@ -515,25 +583,23 @@ class _CharacteristicTileState extends State<CharacteristicTile> {
       },
     );
   }
+//not even pushing data to the list for some reason.
 
-  void extract (){ // double action button extractamundo
-    widget.onNotificationPressed();
-      if (widget.characteristic.uuid.toString().toUpperCase().substring(4, 8) ==
-          '2A19') {
-        //if statement working
-        debugPrint('im working correctly 3');
-        double realBatt = widget.characteristic.lastValue[0].toDouble();
-        BoxBattery.bat = realBatt;
-      }
-      if (widget.characteristic.uuid.toString().toUpperCase().substring(4, 8) ==
-          '483E') {
-        //if statement working
-        debugPrint('im working correctly 3');
-        double realSpeed = widget.characteristic.lastValue[0].toDouble();
-        BoxSpeed.spd = realSpeed;
-      }
+
+
+
+    /*
+    yield* Stream.periodic(Duration(seconds: 1), (int a){
+    if (widget.characteristic.uuid.toString().toUpperCase().substring(4, 8) =='483E') {
+      return widget.characteristic.lastValue[0].toDouble();
+    }
+  });
+
+      */
   }
-}
+
+
+
 //characteristic.uuid.toString().toUpperCase().substring(4, 8) == 2A19
 //value== battery
 //characteristic.lastValue == BATTERY BATERRY
