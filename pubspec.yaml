@@ -34,6 +34,7 @@ dependencies:
   shared_preferences: ^0.5.12+4
  # flutter_ble: ^0.5.3
   #flutter_ble_lib: ^2.3.2
+  scoped_model: ^1.1.0
   flutter:
     sdk: flutter
 

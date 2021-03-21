@@ -5,20 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:bike_fitness/boxes.dart';
+
 import 'package:bike_fitness/widgets.dart';
 
 
-
-
-// controller
-
-  //works below
-Stream<int> mock() async* {
-  // ignore: missing_return
-  yield* Stream.periodic(Duration(seconds: 1), (int a) {
-    return a++;
-  });
-}
 
 class LiveData {
   final String title;
@@ -143,9 +133,9 @@ class gridGraph extends StatelessWidget {
                    child: FittedBox(
                        alignment: Alignment.bottomCenter,
                        fit: BoxFit.contain,
-                       child:StreamBuilder<List<int>>(
-                         stream: controller.stream,
-                         initialData: [8008135] ,
+                       child:StreamBuilder(
+                         stream: inc,
+                         initialData: 0 ,
                          builder: ( context,  snapshot){
                                                              debugPrint('snapshot.data: '+snapshot.data.toString());
                                                              debugPrint('snapshot connection state: '+snapshot.connectionState.toString());
@@ -153,8 +143,8 @@ class gridGraph extends StatelessWidget {
                                                              debugPrint('snapshot has data: '+snapshot.hasData.toString());
                                                              debugPrint('snapshot is pause: '+controller.isPaused.toString());
                                                              debugPrint('snapshot to string: '+snapshot.toString());
-                                                             debugPrint('ss paused'+ss.isPaused.toString());
-                                                             debugPrint('snapshot list @0:   '+snapshot.data[0].toString());
+                                                            // debugPrint('ss paused'+ss.isPaused.toString());
+                                                            // debugPrint('snapshot list @0:   '+snapshot.data[0].toString());
                             if(!snapshot.hasData){
                               return CircularProgressIndicator();
                             }
@@ -162,6 +152,7 @@ class gridGraph extends StatelessWidget {
                              return Text("Error");
                            }
                            else {
+
                              return Text(snapshot.data.toString(),
                                  style: TextStyle(color: Colors.pink[700]));
                            }

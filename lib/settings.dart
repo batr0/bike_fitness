@@ -2,7 +2,7 @@ import 'package:bike_fitness/bluetooth.dart';
 import 'package:flutter/material.dart';
 import 'package:bike_fitness/support.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:bike_fitness/btserial/example/btserial.dart';
 class settings extends StatelessWidget {
   final appTitle = 'Rides and Settings';
 
@@ -85,7 +85,7 @@ class MyHomePage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => FindDevicesScreen()),
+                    MaterialPageRoute(builder: (context) => ExampleApplication()),
                 );
               },
             ),
