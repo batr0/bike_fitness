@@ -13,6 +13,7 @@ This app uses:
 - [map_elevation](https://github.com/OwnWeb/map_elevation)
 - [flutter_map](https://pub.dev/packages/flutter_map)
 - [flutter_blue](https://github.com/pauldemarco/flutter_blue)
+- [flutter_bluetooth_serial](https://github.com/edufolly/flutter_bluetooth_serial)
 
 ### Bluetooth Setup
 First tab is Settings, click on the triple dashes, and then click the Bluetooth page
