@@ -3,6 +3,18 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+import 'package:bike_fitness/dataparser.dart';
+
+//List<String> smegma = [];
+dynamic  parsed = [];
+
+Stream<String> speedStream() async* {
+  yield* Stream.periodic(Duration(seconds: 1), (int a) {
+    return parsed[0];
+
+  });
+  speedStream().asBroadcastStream();
+}
 
 class ChatPage extends StatefulWidget {
   final BluetoothDevice server;
@@ -84,6 +96,8 @@ class _ChatPage extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+
+
     final List<Row> list = messages.map((_message) {
       return Row(
         children: <Widget>[
@@ -107,8 +121,13 @@ class _ChatPage extends State<ChatPage> {
             : MainAxisAlignment.start,
       );
     }).toList();
-
-    return Scaffold(
+  //debugPrint("TESTING FOR DATA:  "+ messages.last.text); // this is the PHAT data we need
+    //smegma.add(messages.last.text);
+    data2Double.add(messages.last.text.replaceAll("	" , " ").replaceAll(",", " ").toString()); // get rid of tabs and commas, to string
+    parsed = data2Double.last.split(" "); // array of separated strings
+    debugPrint('parsed last : '+ parsed[0]); // parsed is now string array
+    //smegma.add(parsed [0]);
+        return Scaffold(
       appBar: AppBar(
           title: (isConnecting
               ? Text('Connecting chat to ' + widget.server.name + '...')

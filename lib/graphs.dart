@@ -7,7 +7,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:bike_fitness/boxes.dart';
 
 import 'package:bike_fitness/widgets.dart';
-
+import 'package:bike_fitness/btserial/example/ChatPage.dart';
 
 
 class LiveData {
@@ -133,18 +133,21 @@ class gridGraph extends StatelessWidget {
                    child: FittedBox(
                        alignment: Alignment.bottomCenter,
                        fit: BoxFit.contain,
-                       child:StreamBuilder(
-                         stream: inc,
-                         initialData: 0 ,
+                       child:StreamBuilder<String>(
+                         stream: speedStream(),
+                         initialData: '0' ,
                          builder: ( context,  snapshot){
+
                                                              debugPrint('snapshot.data: '+snapshot.data.toString());
                                                              debugPrint('snapshot connection state: '+snapshot.connectionState.toString());
                                                              debugPrint('snapshot error: '+snapshot.hasError.toString());
                                                              debugPrint('snapshot has data: '+snapshot.hasData.toString());
-                                                             debugPrint('snapshot is pause: '+controller.isPaused.toString());
-                                                             debugPrint('snapshot to string: '+snapshot.toString());
+                                                            // debugPrint('snapshot is pause: '+controller.isPaused.toString());
+                                                             debugPrint('snapshot to string: '+ ChatPage().toString());
                                                             // debugPrint('ss paused'+ss.isPaused.toString());
-                                                            // debugPrint('snapshot list @0:   '+snapshot.data[0].toString());
+                                                            // debugPrint('smegma.last:    :   '+smegma.last.toString());
+                                                             //debugPrint('snapshot list :   '+smegma.last.toString());
+
                             if(!snapshot.hasData){
                               return CircularProgressIndicator();
                             }
@@ -153,7 +156,7 @@ class gridGraph extends StatelessWidget {
                            }
                            else {
 
-                             return Text(snapshot.data.toString(),
+                             return Text(snapshot.data,
                                  style: TextStyle(color: Colors.pink[700]));
                            }
                          },
