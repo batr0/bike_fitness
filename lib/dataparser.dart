@@ -10,6 +10,7 @@ List<String> data2Double = [];
 double totalDistanceInM = 0;
 double totalDistanceInKm = 0;
 
+
  void distCalc() {
   final Distance distance = Distance();
   for(var i = 0; i < sensData.length - 1; i++){
