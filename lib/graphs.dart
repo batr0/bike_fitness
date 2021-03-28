@@ -138,7 +138,7 @@ class gridGraph extends StatelessWidget {
                          initialData: '0' ,
                          builder: ( context,  snapshot){
 
-                                                             debugPrint('snapshot.data: '+snapshot.data.toString());
+                                                             /*debugPrint('snapshot.data: '+snapshot.data.toString());
                                                              debugPrint('snapshot connection state: '+snapshot.connectionState.toString());
                                                              debugPrint('snapshot error: '+snapshot.hasError.toString());
                                                              debugPrint('snapshot has data: '+snapshot.hasData.toString());
@@ -146,7 +146,7 @@ class gridGraph extends StatelessWidget {
                                                              debugPrint('snapshot to string: '+ ChatPage().toString());
                                                             // debugPrint('ss paused'+ss.isPaused.toString());
                                                             // debugPrint('smegma.last:    :   '+smegma.last.toString());
-                                                             //debugPrint('snapshot list :   '+smegma.last.toString());
+                                                             //debugPrint('snapshot list :   '+smegma.last.toString());*/
 
                             if(!snapshot.hasData){
                               return CircularProgressIndicator();
@@ -211,7 +211,34 @@ class gridGraph extends StatelessWidget {
                       child: FittedBox(
                           alignment: Alignment.bottomCenter,
                           fit: BoxFit.contain,
-                          child:Text(" $_temp ",  style: TextStyle(color: Colors.yellow[700]))),
+                          child:StreamBuilder<String>(
+                            stream: tempStream(),
+                            initialData: '0' ,
+                            builder: ( context,  snapshot){
+
+                              /*debugPrint('snapshot.data: '+snapshot.data.toString());
+                              debugPrint('snapshot connection state: '+snapshot.connectionState.toString());
+                              debugPrint('snapshot error: '+snapshot.hasError.toString());
+                              debugPrint('snapshot has data: '+snapshot.hasData.toString());
+                              // debugPrint('snapshot is pause: '+controller.isPaused.toString());
+                              debugPrint('snapshot to string: '+ ChatPage().toString());
+                              // debugPrint('ss paused'+ss.isPaused.toString());
+                              // debugPrint('smegma.last:    :   '+smegma.last.toString());
+                              //debugPrint('snapshot list :   '+smegma.last.toString());*/
+
+                              if(!snapshot.hasData){
+                                return CircularProgressIndicator();
+                              }
+                              else if(snapshot.hasError){
+                                return Text("Error");
+                              }
+                              else {
+
+                                return Text(snapshot.data,
+                                    style: TextStyle(color: Colors.yellow[700]));
+                              }
+                            },
+                          )),
                     ),
                     Expanded(
                       child:   Text("°F",  style: TextStyle(color: Colors.blueGrey[50],fontSize: 45),),

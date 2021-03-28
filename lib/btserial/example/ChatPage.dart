@@ -16,6 +16,13 @@ Stream<String> speedStream() async* {
   speedStream().asBroadcastStream();
 }
 
+Stream<String> tempStream() async* {
+  yield* Stream.periodic(Duration(seconds: 1), (int a) {
+    return parsed[1];
+
+  });
+  tempStream().asBroadcastStream();
+}
 class ChatPage extends StatefulWidget {
   final BluetoothDevice server;
 
@@ -125,7 +132,13 @@ class _ChatPage extends State<ChatPage> {
     //smegma.add(messages.last.text);
     data2Double.add(messages.last.text.replaceAll("	" , " ").replaceAll(",", " ").toString()); // get rid of tabs and commas, to string
     parsed = data2Double.last.split(" "); // array of separated strings
-    debugPrint('parsed last : '+ parsed[0]); // parsed is now string array
+    debugPrint("parsed last: "+ parsed.toString()); // parsed is now string array
+    totalDistanceInM = 0;
+    totalDistanceInKm = 0;
+    distCalc();
+    debugPrint("distance in M: "+ totalDistanceInM.toString());
+    debugPrint("distance in KM: "+ totalDistanceInKm.toString());
+
     //smegma.add(parsed [0]);
         return Scaffold(
       appBar: AppBar(
