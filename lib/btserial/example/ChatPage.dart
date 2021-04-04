@@ -192,7 +192,7 @@ class _ChatPage extends State<ChatPage> {
                       Text('End Ride',textScaleFactor: 1.25),
                     ],
                   ),
-                  onPressed: isConnected ? () => _sendMessage('b') : null,
+                  onPressed: isConnecting ? () => _sendMessage('b') : null,
                 ),
                 SizedBox(width: 150),
                 RaisedButton(
@@ -207,7 +207,7 @@ class _ChatPage extends State<ChatPage> {
                       Text('Start Ride',textScaleFactor: 1.25),
                     ],
                   ),
-                  onPressed: isConnected ? () => _sendMessage('h') : null,
+                  onPressed: isConnecting ? () => _sendMessage('h') : null,
                 ),
               ],
             ),
@@ -232,14 +232,14 @@ class _ChatPage extends State<ChatPage> {
                     ),
                   ),
                 ),
-               /* Container(
+                Container(
                   margin: const EdgeInsets.all(8.0),
                   child: IconButton(
                       icon: const Icon(Icons.send),
                       onPressed: isConnected
                           ? () => _sendMessage(textEditingController.text)
                           : null),
-                ),*/
+                ),
               ],
             )
           ],
