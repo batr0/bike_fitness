@@ -1,4 +1,5 @@
-import 'package:bike_fitness/WEBtoMSC.dart';
+//import 'package:bike_fitness/WEB toMSC.dart';
+import 'package:bike_fitness/dataparser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
@@ -33,13 +34,13 @@ class PolylinePage extends StatelessWidget {
                   PolylineLayerOptions(
                     polylines: [
                       Polyline(
-                          points: coffee,
+                          points: sensData2,
                           strokeWidth: 4.0,
                           color: Colors.purple),
-                      Polyline(
+                   /*   Polyline(
                           points: webMSC,
                           strokeWidth: 4.0,
-                          color: Colors.redAccent[200]),
+                          color: Colors.redAccent[200]),*/
 
                       Polyline(
                           points: sensorData,

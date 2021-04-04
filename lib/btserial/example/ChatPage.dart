@@ -1,28 +1,41 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:bike_fitness/dataparser.dart';
+import 'package:latlong/latlong.dart';
 
-//List<String> smegma = [];
 dynamic  parsed = [];
 
 Stream<String> speedStream() async* {
-  yield* Stream.periodic(Duration(seconds: 1), (int a) {
-    return parsed[0];
-
+  yield* Stream.periodic(Duration(milliseconds: 75), (int a) {
+    return parsed[6]; // speed
   });
   speedStream().asBroadcastStream();
 }
 
 Stream<String> tempStream() async* {
-  yield* Stream.periodic(Duration(seconds: 1), (int a) {
-    return parsed[1];
-
+  yield* Stream.periodic(Duration(milliseconds: 75), (int a) {
+    return parsed[15]; // temperaturre
   });
   tempStream().asBroadcastStream();
 }
+
+Stream<String> gpsStream() async* {
+  yield* Stream.periodic(Duration(milliseconds: 500), (int a) {
+    var lat=double.parse(parsed[4]).toDouble();
+    var long=double.parse(parsed[5]).toDouble();
+    sensData2.add(LatLng(lat, long));
+    totalDistanceInM=totalDistanceInM*.000621371; // conversions
+    return totalDistanceInM.toStringAsFixed(2); // temperaturre // 2 sig figs
+  });
+  tempStream().asBroadcastStream();
+}
+
+//set the
+
 class ChatPage extends StatefulWidget {
   final BluetoothDevice server;
 
@@ -128,16 +141,23 @@ class _ChatPage extends State<ChatPage> {
             : MainAxisAlignment.start,
       );
     }).toList();
-  //debugPrint("TESTING FOR DATA:  "+ messages.last.text); // this is the PHAT data we need
-    //smegma.add(messages.last.text);
-    data2Double.add(messages.last.text.replaceAll("	" , " ").replaceAll(",", " ").toString()); // get rid of tabs and commas, to string
-    parsed = data2Double.last.split(" "); // array of separated strings
-    debugPrint("parsed last: "+ parsed.toString()); // parsed is now string array
-    totalDistanceInM = 0;
-    totalDistanceInKm = 0;
-    distCalc();
-    debugPrint("distance in M: "+ totalDistanceInM.toString());
-    debugPrint("distance in KM: "+ totalDistanceInKm.toString());
+        if(messages!= null && messages.isNotEmpty){ // error catching no more bad state before the list is popiulated
+          data2Double.add(messages.last.text.replaceAll("  " , " ").replaceAll(",", " ").toString());
+        }// get rid of tabs and commas, to string
+
+        parsed = data2Double.last.split(" "); // array of separated strings
+       // debugPrint("sensData last: "+ sensData2.toString()); // parsed is now string array
+
+          double tempDist = 0; // reset the distance for calculations
+        /*List<LatLng>  tempgps = [];
+          sensData2 = tempgps;*/
+
+        totalDistanceInM = tempDist;
+          distCalc();
+    //totalDistanceInKm = 0;
+    //distCalc();
+    //debugPrint("distance in M: "+ totalDistanceInM.toString());
+    //debugPrint("distance in KM: "+ totalDistanceInKm.toString());
 
     //smegma.add(parsed [0]);
         return Scaffold(
@@ -156,6 +176,42 @@ class _ChatPage extends State<ChatPage> {
                   controller: listScrollController,
                   children: list),
             ),
+            Wrap(
+              children: <Widget>[
+
+
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(8.0),
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  color: Colors.pink[700],
+                  child: Column(
+                    children: <Widget>[
+                      Icon(Icons.stop,size: 30),
+                      Text('End Ride',textScaleFactor: 1.25),
+                    ],
+                  ),
+                  onPressed: isConnected ? () => _sendMessage('b') : null,
+                ),
+                SizedBox(width: 150),
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(8.0),
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  color: Colors.yellow[700],
+                  child: Column(
+                    children: <Widget>[
+                      Icon(Icons.send,size: 30),
+                      Text('Start Ride',textScaleFactor: 1.25),
+                    ],
+                  ),
+                  onPressed: isConnected ? () => _sendMessage('h') : null,
+                ),
+              ],
+            ),
+
             Row(
               children: <Widget>[
                 Flexible(
@@ -176,14 +232,14 @@ class _ChatPage extends State<ChatPage> {
                     ),
                   ),
                 ),
-                Container(
+               /* Container(
                   margin: const EdgeInsets.all(8.0),
                   child: IconButton(
                       icon: const Icon(Icons.send),
                       onPressed: isConnected
                           ? () => _sendMessage(textEditingController.text)
                           : null),
-                ),
+                ),*/
               ],
             )
           ],

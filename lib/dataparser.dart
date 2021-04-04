@@ -7,18 +7,22 @@ import 'dart:math' show cos, sqrt, asin;
 import 'package:latlong/latlong.dart';
 
 List<String> data2Double = [];
+List<LatLng>  sensData2 = [];
 double totalDistanceInM = 0;
-double totalDistanceInKm = 0;
+//double totalDistanceInKm = totalDistanceInM*0.000621371;
+
+// need function to stream parsed(lat, lng) into sensData
 
 
  void distCalc() {
   final Distance distance = Distance();
-  for(var i = 0; i < sensData.length - 1; i++){
-    totalDistanceInM += distance( LatLng(sensData[i].latitude, sensData[i].longitude), LatLng(sensData[i+1].latitude, sensData[i+1].longitude)); // meters calculation, ezpz
+
+  for(var i = 0; i < sensData2.length - 1; i++){
+    totalDistanceInM += distance( LatLng(sensData2[i].latitude, sensData2[i].longitude), LatLng(sensData2[i+1].latitude, sensData2[i+1].longitude)); // meters calculation, ezpz
     //totalDistanceInKm += distance.as(LengthUnit.Mile, LatLng(sensData[i].latitude, sensData[i].longitude), LatLng(sensData[i+1].latitude, sensData[i+1].longitude)); // kilometers calculation, returning 0 for some reason
     //
   }
-  }
+ }
 
 List<LatLng> sensData = [
   LatLng(	30.62731667	,	-96.34075833	),

@@ -8495,6 +8495,8 @@ List<List<double>> polyline_data = [
 ];
 
 List<ElevationPoint> getPoints() {
+
+  //push sensData to polyline data here and setupt the GPS+velocity
   return polyline_data.map((e) => ElevationPoint(e[0], e[1], e[2])).toList();
 }
 

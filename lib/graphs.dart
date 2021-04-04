@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:bike_fitness/dataparser.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -116,6 +117,7 @@ class gridGraph extends StatelessWidget {
 
 
   Widget build(BuildContext context) {
+    totalDistanceInM=0;
 
     return  GridView.count(
         shrinkWrap: true,
@@ -163,7 +165,7 @@ class gridGraph extends StatelessWidget {
                        )),
                  ),
                      Expanded(
-                       child:   Text("KM/h",  style: TextStyle(color: Colors.blueGrey[50],fontSize: 45),),
+                       child:   Text("MPH",  style: TextStyle(color: Colors.blueGrey[50],fontSize: 45),),
                      ),
                  ]
                )
@@ -194,10 +196,37 @@ class gridGraph extends StatelessWidget {
                       child: FittedBox(
                           alignment: Alignment.bottomCenter,
                           fit: BoxFit.contain,
-                          child:Text(" $_dist ",  style: TextStyle(color: Colors.green[700]))),
+                          child:StreamBuilder<String>(
+                            stream: gpsStream(),
+                            initialData: '0.00' ,
+                            builder: ( context,  snapshot){
+
+                              /*debugPrint('snapshot.data: '+snapshot.data.toString());
+                              debugPrint('snapshot connection state: '+snapshot.connectionState.toString());
+                              debugPrint('snapshot error: '+snapshot.hasError.toString());
+                              debugPrint('snapshot has data: '+snapshot.hasData.toString());
+                              // debugPrint('snapshot is pause: '+controller.isPaused.toString());
+                              debugPrint('snapshot to string: '+ ChatPage().toString());
+                              // debugPrint('ss paused'+ss.isPaused.toString());
+                              // debugPrint('smegma.last:    :   '+smegma.last.toString());
+                              //debugPrint('snapshot list :   '+smegma.last.toString());*/
+
+                              if(!snapshot.hasData){
+                                return CircularProgressIndicator();
+                              }
+                              else if(snapshot.hasError){
+                                return Text("Error");
+                              }
+                              else {
+
+                                return Text(snapshot.data,
+                                    style: TextStyle(color: Colors.green[700]));
+                              }
+                            },
+                          )),
                     ),
                     Expanded(
-                      child:   Text("KM",  style: TextStyle(color: Colors.blueGrey[50],fontSize: 45),),
+                      child:   Text("Miles",  style: TextStyle(color: Colors.blueGrey[50],fontSize: 45),),
                     ),
                   ]
               )
