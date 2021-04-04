@@ -239,6 +239,7 @@ class _ChatPage extends State<ChatPage> {
                       onPressed: isConnected
                           ? () => _sendMessage(textEditingController.text)
                           : null),
+                  // text h working, buttons not so much
                 ),
               ],
             )
