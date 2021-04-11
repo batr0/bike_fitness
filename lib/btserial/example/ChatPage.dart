@@ -7,26 +7,28 @@ import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:bike_fitness/dataparser.dart';
 import 'package:latlong/latlong.dart';
 
+import '../../graphs.dart';
+
 dynamic  parsed = [];
 
 Stream<String> speedStream() async* {
-  yield* Stream.periodic(Duration(milliseconds: 75), (int a) {
-    return parsed[6]; // speed
+  yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
+    return parsed[5]; // speed
   });
   speedStream().asBroadcastStream();
 }
 
 Stream<String> tempStream() async* {
-  yield* Stream.periodic(Duration(milliseconds: 75), (int a) {
-    return parsed[15]; // temperaturre
+  yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
+    return parsed[14]; // temperaturre
   });
   tempStream().asBroadcastStream();
 }
 
 Stream<String> gpsStream() async* {
-  yield* Stream.periodic(Duration(milliseconds: 500), (int a) {
-    var lat=double.parse(parsed[4]).toDouble();
-    var long=double.parse(parsed[5]).toDouble();
+  yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
+    var lat=double.parse(parsed[3]).toDouble();
+    var long=double.parse(parsed[4]).toDouble();
     sensData2.add(LatLng(lat, long));
     totalDistanceInM=totalDistanceInM*.000621371; // conversions
     return totalDistanceInM.toStringAsFixed(2); // temperaturre // 2 sig figs
@@ -60,7 +62,7 @@ class _ChatPage extends State<ChatPage> {
   String _messageBuffer = '';
 
   final TextEditingController textEditingController =
-      new TextEditingController();
+  new TextEditingController();
   final ScrollController listScrollController = new ScrollController();
 
   bool isConnecting = true;
@@ -96,6 +98,7 @@ class _ChatPage extends State<ChatPage> {
           setState(() {});
         }
       });
+
     }).catchError((error) {
       print('Cannot connect, exception occured');
       print(error);
@@ -106,24 +109,22 @@ class _ChatPage extends State<ChatPage> {
   void dispose() {
     // Avoid memory leak (`setState` after dispose) and disconnect
     if (isConnected) {
-      isDisconnecting = true;
+      isDisconnecting = false;
       connection.dispose();
       connection = null;
     }
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
 
-
     final List<Row> list = messages.map((_message) {
       return Row(
         children: <Widget>[
           Container(
             child: Text(
-                (text) {
+                    (text) {
                   return text == '/shrug' ? '¯\\_(ツ)_/¯' : text;
                 }(_message.text.trim()),
                 style: TextStyle(color: Colors.white)),
@@ -132,7 +133,7 @@ class _ChatPage extends State<ChatPage> {
             width: 222.0,
             decoration: BoxDecoration(
                 color:
-                    _message.whom == clientID ? Colors.blueAccent : Colors.grey,
+                _message.whom == clientID ? Colors.blueAccent : Colors.grey,
                 borderRadius: BorderRadius.circular(7.0)),
           ),
         ],
@@ -141,44 +142,51 @@ class _ChatPage extends State<ChatPage> {
             : MainAxisAlignment.start,
       );
     }).toList();
-        if(messages!= null && messages.isNotEmpty){ // error catching no more bad state before the list is popiulated
-          data2Double.add(messages.last.text.replaceAll("  " , " ").replaceAll(",", " ").toString());
-        }// get rid of tabs and commas, to string
+    if(messages!= null && messages.isNotEmpty){ // error catching no more bad state before the list is popiulated
+      data2Double.add(messages.last.text.replaceAll("	" , " ").replaceAll(",", " ").toString());
+    }// get rid of tabs and commas, to string
 
-        parsed = data2Double.last.split(" "); // array of separated strings
-       // debugPrint("sensData last: "+ sensData2.toString()); // parsed is now string array
-
-          double tempDist = 0; // reset the distance for calculations
-        /*List<LatLng>  tempgps = [];
+    parsed = data2Double.last.split(" "); // array of separated strings
+    // debugPrint("sensData last: "+ sensData2.toString()); // parsed is now string array
+    double tempDist = 0; // reset the distance for calculations
+    /*List<LatLng>  tempgps = [];
           sensData2 = tempgps;*/
 
-        totalDistanceInM = tempDist;
-          distCalc();
+    totalDistanceInM = tempDist;
+    distCalc();
     //totalDistanceInKm = 0;
     //distCalc();
+    debugPrint("D.parsed "+ parsed.toString());
     //debugPrint("distance in M: "+ totalDistanceInM.toString());
     //debugPrint("distance in KM: "+ totalDistanceInKm.toString());
-
+    debugPrint("?" + parsed.toString());
     //smegma.add(parsed [0]);
-        return Scaffold(
+    return Scaffold(
       appBar: AppBar(
           title: (isConnecting
               ? Text('Connecting chat to ' + widget.server.name + '...')
               : isConnected
-                  ? Text('Live chat with ' + widget.server.name)
-                  : Text('Chat log with ' + widget.server.name))),
+              ? Text('Live chat with ' + widget.server.name)
+              : Text('Chat log with ' + widget.server.name))),
       body: SafeArea(
         child: Column(
           children: <Widget>[
+            gridGraph(),
+            /*
             Flexible(
               child: ListView(
                   padding: const EdgeInsets.all(12.0),
                   controller: listScrollController,
                   children: list),
             ),
+            */
+
+
+
+
+
             Wrap(
               children: <Widget>[
-
 
                 RaisedButton(
                   shape: RoundedRectangleBorder(
@@ -207,10 +215,12 @@ class _ChatPage extends State<ChatPage> {
                       Text('Start Ride',textScaleFactor: 1.25),
                     ],
                   ),
-                  onPressed: isConnecting ? () => _sendMessage('h') : null,
+                  onPressed: () => _sendMessage('h') ,
                 ),
               ],
             ),
+
+
 
             Row(
               children: <Widget>[
@@ -224,8 +234,8 @@ class _ChatPage extends State<ChatPage> {
                         hintText: isConnecting
                             ? 'Wait until connected...'
                             : isConnected
-                                ? 'Type your message...'
-                                : 'Chat got disconnected',
+                            ? 'Type your message...'
+                            : 'Chat got disconnected',
                         hintStyle: const TextStyle(color: Colors.grey),
                       ),
                       enabled: isConnected,
@@ -276,7 +286,7 @@ class _ChatPage extends State<ChatPage> {
 
     // Create message if there is new line character
     String dataString = String.fromCharCodes(buffer);
-    int index = buffer.indexOf(13);
+    int index = buffer.indexOf(10);
     if (~index != 0) {
       setState(() {
         messages.add(
@@ -284,7 +294,7 @@ class _ChatPage extends State<ChatPage> {
             1,
             backspacesCounter > 0
                 ? _messageBuffer.substring(
-                    0, _messageBuffer.length - backspacesCounter)
+                0, _messageBuffer.length - backspacesCounter)
                 : _messageBuffer + dataString.substring(0, index),
           ),
         );
@@ -293,7 +303,7 @@ class _ChatPage extends State<ChatPage> {
     } else {
       _messageBuffer = (backspacesCounter > 0
           ? _messageBuffer.substring(
-              0, _messageBuffer.length - backspacesCounter)
+          0, _messageBuffer.length - backspacesCounter)
           : _messageBuffer + dataString);
     }
   }
