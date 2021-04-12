@@ -19,7 +19,7 @@ class TabBarDemo extends StatelessWidget {
       ),
 
       home: DefaultTabController(
-        length: 4,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             bottom: TabBar(
@@ -27,8 +27,8 @@ class TabBarDemo extends StatelessWidget {
                 Tab(icon: Icon(Icons.settings)),
                 //Tab(icon: Icon(Icons.contact_support)),
                // Tab(icon: Icon(Icons.bluetooth)),
-                Tab(icon: Icon(Icons.show_chart)),
-                Tab(icon: Icon(Icons.bar_chart)),
+           /*     Tab(icon: Icon(Icons.show_chart)),
+                Tab(icon: Icon(Icons.bar_chart)),*/
                 Tab(icon: Icon(Icons.terrain_outlined)),
               ],
             ),
@@ -67,7 +67,7 @@ class TabBarDemo extends StatelessWidget {
               ),
               */
 
-              Container( //////////// LIVE DISPLAY DATA ///POWER ETC....
+         /*     Container( //////////// LIVE DISPLAY DATA ///POWER ETC....
 
                   color: Colors.blueGrey[50],
                   child: Column(
@@ -101,7 +101,7 @@ class TabBarDemo extends StatelessWidget {
 
                     ],
                   )
-              ),
+              ),*/
 
               Stack(///////////////MAAAPPPPPPPPPS
                   children: <Widget>[

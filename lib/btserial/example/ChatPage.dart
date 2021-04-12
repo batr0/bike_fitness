@@ -142,25 +142,22 @@ class _ChatPage extends State<ChatPage> {
             : MainAxisAlignment.start,
       );
     }).toList();
-    if(messages!= null && messages.isNotEmpty){ // error catching no more bad state before the list is popiulated
-      data2Double.add(messages.last.text.replaceAll("	" , " ").replaceAll(",", " ").toString());
-    }// get rid of tabs and commas, to string
 
-    parsed = data2Double.last.split(" "); // array of separated strings
-    // debugPrint("sensData last: "+ sensData2.toString()); // parsed is now string array
+    if(messages != null && messages.length > 0){    // error catching no more bad state before the list is populated
+      var serialData = (messages.last.text.replaceAll("	" , " ").replaceAll(",", " ").toString());
+      data2Double.add(serialData);
+      parsed = data2Double.last.split(" ");
+    }
+
+    // array of separated strings
     double tempDist = 0; // reset the distance for calculations
-    /*List<LatLng>  tempgps = [];
-          sensData2 = tempgps;*/
 
+    // get rid of tabs and commas, to stri
     totalDistanceInM = tempDist;
     distCalc();
-    //totalDistanceInKm = 0;
-    //distCalc();
     debugPrint("D.parsed "+ parsed.toString());
-    //debugPrint("distance in M: "+ totalDistanceInM.toString());
-    //debugPrint("distance in KM: "+ totalDistanceInKm.toString());
     debugPrint("?" + parsed.toString());
-    //smegma.add(parsed [0]);
+
     return Scaffold(
       appBar: AppBar(
           title: (isConnecting
@@ -192,11 +189,11 @@ class _ChatPage extends State<ChatPage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(8.0),
                   ),
-                  padding: EdgeInsets.all(15.0),
+                  padding: EdgeInsets.all(20.0),
                   color: Colors.pink[700],
                   child: Column(
                     children: <Widget>[
-                      Icon(Icons.stop,size: 30),
+                      Icon(Icons.stop,size: 45),
                       Text('End Ride',textScaleFactor: 1.25),
                     ],
                   ),
@@ -207,11 +204,11 @@ class _ChatPage extends State<ChatPage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(8.0),
                   ),
-                  padding: EdgeInsets.all(15.0),
+                  padding: EdgeInsets.all(20.0),
                   color: Colors.yellow[700],
                   child: Column(
                     children: <Widget>[
-                      Icon(Icons.send,size: 30),
+                      Icon(Icons.send,size:45),
                       Text('Start Ride',textScaleFactor: 1.25),
                     ],
                   ),

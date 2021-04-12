@@ -9,6 +9,7 @@ import 'package:bike_fitness/boxes.dart';
 
 import 'package:bike_fitness/widgets.dart';
 import 'package:bike_fitness/btserial/example/ChatPage.dart';
+import 'package:flutter/rendering.dart';
 
 
 class LiveData {
@@ -151,7 +152,7 @@ class gridGraph extends StatelessWidget {
                                                              //debugPrint('snapshot list :   '+smegma.last.toString());*/
 
                             if(!snapshot.hasData){
-                              return CircularProgressIndicator();
+                              return Container(child:CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.pink[700])),width: 60,height: 60, padding: EdgeInsets.all(10));
                             }
                             else if(snapshot.hasError){
                              return Text("Error");
@@ -212,7 +213,7 @@ class gridGraph extends StatelessWidget {
                               //debugPrint('snapshot list :   '+smegma.last.toString());*/
 
                               if(!snapshot.hasData){
-                                return CircularProgressIndicator();
+                                return Container(child:CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.green[700])),width: 60,height: 60, padding: EdgeInsets.all(10));
                               }
                               else if(snapshot.hasError){
                                 return Text("Error");
@@ -256,7 +257,7 @@ class gridGraph extends StatelessWidget {
                               //debugPrint('snapshot list :   '+smegma.last.toString());*/
 
                               if(!snapshot.hasData){
-                                return CircularProgressIndicator();
+                                return Container(child:CircularProgressIndicator(),width: 60,height: 60, padding: EdgeInsets.all(10));
                               }
                               else if(snapshot.hasError){
                                 return Text("Error");
