@@ -1,3 +1,4 @@
+import 'package:bike_fitness/dataparser.dart';
 import 'package:bike_fitness/settings.dart';
 import 'package:bike_fitness/widgets/drawer.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
               polylines: [
                 Polyline(
                   // An optional tag to distinguish polylines in callback
-                  points: getPoints(),
+                  points: elevData,
                   color: Colors.blueGrey[800],
                   strokeWidth: 3.0,
                 ),
@@ -90,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   return true;
                 },
                 child: Elevation(
-                  getPoints(),
+                  if(){}elevData,
                   color: Colors.blueGrey[50],
                   elevationGradientColors: ElevationGradientColors(
                       gt10: Colors.pink[200],

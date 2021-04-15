@@ -42,10 +42,7 @@ class PolylinePage extends StatelessWidget {
                           strokeWidth: 4.0,
                           color: Colors.redAccent[200]),*/
 
-                      Polyline(
-                          points: sensorData,
-                          strokeWidth: 4.0,
-                          color: Colors.teal[200]),
+
                     ],
                   )
                 ],
@@ -57,7 +54,7 @@ class PolylinePage extends StatelessWidget {
                     child: Column(
                         children: [
                           Text(
-                            'Coffee Ride, Campus to Bryan ',
+                            'Sensor Data from ESP32 ',
                             style: TextStyle(fontSize: 18, color: Colors.purple),
                           ),
                           Text(

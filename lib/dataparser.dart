@@ -6,14 +6,26 @@ import 'package:quiver/iterables.dart';
 import 'dart:math' show cos, sqrt, asin;
 import 'package:latlong/latlong.dart';
 
+import 'package:bike_fitness/widgets/map_elevation.dart';
+
+
 List<String> data2Double = [];
 List<LatLng>  sensData2 = [];
 double totalDistanceInM = 0;
+var lat_compare = 00.000000;
+var long_compare = 00.000000;
+
+List<ElevationPoint>elevData = [];
+
 //double totalDistanceInKm = totalDistanceInM*0.000621371;
 
 // need function to stream parsed(lat, lng) into sensData
 
-
+void reset(){
+   data2Double = [];
+  sensData2 = [];
+   totalDistanceInM = 0;
+}
  void distCalc() {
   final Distance distance = Distance();
 

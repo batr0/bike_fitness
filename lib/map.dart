@@ -33,7 +33,7 @@ class MapDisplay extends StatelessWidget {
     accentColor: Colors.yellow[700],
     backgroundColor:  Colors.blueGrey[50],
    ),
-   home: HomePage(),
+   home: PolylinePage(),
    routes: <String, WidgetBuilder>{
     TapToAddPage.route: (context) => TapToAddPage(),
     EsriPage.route: (context) => EsriPage(),

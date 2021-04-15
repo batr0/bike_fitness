@@ -6,14 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:bike_fitness/dataparser.dart';
 import 'package:latlong/latlong.dart';
+import 'package:bike_fitness/widgets/map_elevation.dart';
 
+import '../../dataparser.dart';
 import '../../graphs.dart';
 
 dynamic  parsed = [];
 
 Stream<String> speedStream() async* {
   yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
-    return parsed[5]; // speed
+    return parsed[5]; //speed
   });
   speedStream().asBroadcastStream();
 }
@@ -29,9 +31,44 @@ Stream<String> gpsStream() async* {
   yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
     var lat=double.parse(parsed[3]).toDouble();
     var long=double.parse(parsed[4]).toDouble();
-    sensData2.add(LatLng(lat, long));
-    totalDistanceInM=totalDistanceInM*.000621371; // conversions
+    var vel=double.parse(parsed[5]).toDouble();
+    var z=double.parse(parsed[6]).toDouble();
+
+    int flag = 0;
+
+    if((lat*long)==0){
+      //The it is not working - no connection case
+      flag  = 1;
+    }
+    if ((lat == lat_compare) || (long == long_compare)) {
+      //Repeated in mem case
+      flag = 2;
+    }
+    // print(lat);
+    // print(lat_compare);
+    if(flag < 1) {
+      sensData2.add(LatLng(lat, long));
+      elevData.add(ElevationPoint(lat, long, z));
+      lat_compare = lat;
+      long_compare = long; //update 'mem'
+      print('New Data Point!');
+    } else{
+      //We do not want this going into memory! eh
+    }
+    // print(flag);
+
+
+    //Need to get the distance
+    if(flag == 1) {
+      //DO NOT DO DIS CALC
+    }else{
+      distCalc();
+    }
+
+    //Return regardless of Exisiting Case...
+    totalDistanceInM = totalDistanceInM * .000621371; // conversions
     return totalDistanceInM.toStringAsFixed(2); // temperaturre // 2 sig figs
+
   });
   tempStream().asBroadcastStream();
 }
@@ -154,9 +191,8 @@ class _ChatPage extends State<ChatPage> {
 
     // get rid of tabs and commas, to stri
     totalDistanceInM = tempDist;
-    distCalc();
-    debugPrint("D.parsed "+ parsed.toString());
-    debugPrint("?" + parsed.toString());
+    //debugPrint("D~"+ sensData2.toString());
+    //debugPrint("D~" + parsed.toString());
 
     return Scaffold(
       appBar: AppBar(
@@ -179,12 +215,8 @@ class _ChatPage extends State<ChatPage> {
             */
 
 
-
-
-
             Wrap(
               children: <Widget>[
-
                 RaisedButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(8.0),
@@ -197,9 +229,23 @@ class _ChatPage extends State<ChatPage> {
                       Text('End Ride',textScaleFactor: 1.25),
                     ],
                   ),
-                  onPressed: isConnecting ? () => _sendMessage('b') : null,
+                  onPressed: () => _sendMessage('b'),
                 ),
-                SizedBox(width: 150),
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(8.0),
+                  ),
+                  padding: EdgeInsets.all(20.0),
+                  color: Colors.blueGrey[300],
+                  child: Column(
+                    children: <Widget>[
+                      Icon(Icons.trip_origin,size:45),
+                      Text('Reset Data',textScaleFactor: 1.25),
+                    ],
+                  ),
+                  onPressed: () => reset() ,
+                ),
+                //reset button
                 RaisedButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(8.0),
@@ -216,7 +262,6 @@ class _ChatPage extends State<ChatPage> {
                 ),
               ],
             ),
-
 
 
             Row(
