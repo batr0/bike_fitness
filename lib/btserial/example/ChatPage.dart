@@ -7,7 +7,6 @@ import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:bike_fitness/dataparser.dart';
 import 'package:latlong/latlong.dart';
 import 'package:bike_fitness/widgets/map_elevation.dart';
-
 import '../../dataparser.dart';
 import '../../graphs.dart';
 
@@ -22,7 +21,7 @@ Stream<String> speedStream() async* {
 
 Stream<String> tempStream() async* {
   yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
-    return parsed[14]; // temperaturre
+    return parsed[14]; // temperature
   });
   tempStream().asBroadcastStream();
 }
@@ -47,8 +46,11 @@ Stream<String> gpsStream() async* {
     // print(lat);
     // print(lat_compare);
     if(flag < 1) {
-      sensData2.add(LatLng(lat, long));
-      elevData.add(ElevationPoint(lat, long, z));
+
+      sensData2.add(LatLng(lat, long)); // add gps points to polyline data
+      elevData.add(ElevationPoint(lat, long, z));// add gps points + elevation data for z data parsing
+      velData.add(ElevationPoint(lat, long, vel));// add gps points + speed  data for z data parsing / mapping
+
       lat_compare = lat;
       long_compare = long; //update 'mem'
       print('New Data Point!');
@@ -216,6 +218,7 @@ class _ChatPage extends State<ChatPage> {
 
 
             Wrap(
+              spacing: 20,  // spacing widget wrap
               children: <Widget>[
                 RaisedButton(
                   shape: RoundedRectangleBorder(
@@ -243,7 +246,7 @@ class _ChatPage extends State<ChatPage> {
                       Text('Reset Data',textScaleFactor: 1.25),
                     ],
                   ),
-                  onPressed: () => reset() ,
+                  onPressed: () => reset(parsed) ,
                 ),
                 //reset button
                 RaisedButton(
