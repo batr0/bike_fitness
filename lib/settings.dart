@@ -1,4 +1,5 @@
 import 'package:bike_fitness/bluetooth.dart';
+import 'package:bike_fitness/csv/lib/main.dart';
 import 'package:flutter/material.dart';
 import 'package:bike_fitness/support.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -92,7 +93,10 @@ class MyHomePage extends StatelessWidget {
             ListTile(
               title: Text('Rides'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => csvStorage()),
+                );
               },
             ),
             ListTile(

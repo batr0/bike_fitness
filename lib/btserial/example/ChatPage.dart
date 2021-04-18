@@ -218,7 +218,6 @@ class _ChatPage extends State<ChatPage> {
 
 
             Wrap(
-              spacing: 20,  // spacing widget wrap
               children: <Widget>[
                 RaisedButton(
                   shape: RoundedRectangleBorder(

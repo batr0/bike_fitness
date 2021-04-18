@@ -36,6 +36,8 @@ dependencies:
   #flutter_ble_lib: ^2.3.2
   scoped_model: ^1.1.0
   quiver: ^2.1.5
+  csv: ^4.1.0
+  file_picker: ^2.1.7
   flutter:
     sdk: flutter
 
