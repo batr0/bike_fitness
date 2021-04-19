@@ -21,11 +21,11 @@ environment:
   sdk: ">=2.8.0 <3.0.0"
 
 dependencies:
-  flutter_blue: ^0.7.2
+  #flutter_blue: ^0.7.2
   flutter_bluetooth_serial: ^0.2.2
   #google_maps_flutter: ^1.0.2
-  charts_flutter: ^0.9.0
-  fl_chart: ^0.12.0
+  #charts_flutter: ^0.9.0
+  #fl_chart: ^0.12.0
   flutter_map: ^0.10.1+1
   latlong: ^0.6.1
   async: ^2.4.2
@@ -34,8 +34,8 @@ dependencies:
   shared_preferences: ^0.5.12+4
  # flutter_ble: ^0.5.3
   #flutter_ble_lib: ^2.3.2
-  scoped_model: ^1.1.0
-  quiver: ^2.1.5
+  #scoped_model: ^1.1.0
+  #quiver: ^2.1.5
   csv: ^4.1.0
   file_picker: ^2.1.7
   flutter:
