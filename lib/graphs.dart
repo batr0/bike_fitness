@@ -180,7 +180,34 @@ class gridGraph extends StatelessWidget {
                       child: FittedBox(
                           alignment: Alignment.bottomCenter,
                           fit: BoxFit.contain,
-                          child:Text(" $_pwr ",  style: TextStyle(color: Colors.lightBlue[100]))),
+                          child:StreamBuilder<String>(
+                            stream: powerStream(),
+                            initialData: '0.0' ,
+                            builder: ( context,  snapshot){
+
+                              /*debugPrint('snapshot.data: '+snapshot.data.toString());
+                              debugPrint('snapshot connection state: '+snapshot.connectionState.toString());
+                              debugPrint('snapshot error: '+snapshot.hasError.toString());
+                              debugPrint('snapshot has data: '+snapshot.hasData.toString());
+                              // debugPrint('snapshot is pause: '+controller.isPaused.toString());
+                              debugPrint('snapshot to string: '+ ChatPage().toString());
+                              // debugPrint('ss paused'+ss.isPaused.toString());
+                              // debugPrint('smegma.last:    :   '+smegma.last.toString());
+                              //debugPrint('snapshot list :   '+smegma.last.toString());*/
+
+                              if(!snapshot.hasData){
+                                return Container(child:CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.lightBlue[100])),width: 60,height: 60, padding: EdgeInsets.all(10));
+                              }
+                              else if(snapshot.hasError){
+                                return Text("Error");
+                              }
+                              else {
+
+                                return Text(snapshot.data,
+                                    style: TextStyle(color: Colors.lightBlue[100]));
+                              }
+                            },
+                          )),
                     ),
                     Expanded(
                       child:   Text("Watts",  style: TextStyle(color: Colors.blueGrey[50],fontSize: 45),),

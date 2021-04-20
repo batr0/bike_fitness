@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,19 @@ Stream<String> speedStream() async* {
   yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
     return parsed[5]; //speed
   });
+  speedStream().asBroadcastStream();
+}
+
+Stream<String> powerStream() async* {
+  yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
+  var x = double.parse(parsed[5]).toDouble();
+  if(x==0){
+    return 0.toString();
+  }
+  else{
+  double y =  2.4974*log(x) - 2.643;
+    return y.toStringAsFixed(2); //speed
+  }});
   speedStream().asBroadcastStream();
 }
 
