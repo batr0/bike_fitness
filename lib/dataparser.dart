@@ -14,6 +14,9 @@ List<LatLng>  sensData2 = [];
 List<ElevationPoint>elevData = [];
 List<ElevationPoint>velData = [];
 
+List<dynamic> csv=[];
+List<List<dynamic>> csv2=[];
+
 var lat_compare = 00.000000;
 var long_compare = 00.000000;
 double totalDistanceInM = 0;
@@ -30,6 +33,8 @@ void reset(dynamic list){ // resets values stored , takes in parsed[]
    totalDistanceInM = 0;
 
    list=[];
+   csv=[];
+   csv2=[];
 }
 
 

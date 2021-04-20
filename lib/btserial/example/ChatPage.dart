@@ -13,6 +13,7 @@ import '../../graphs.dart';
 
 dynamic  parsed = [];
 
+
 Stream<String> speedStream() async* {
   yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
     return parsed[5]; //speed
@@ -200,6 +201,9 @@ class _ChatPage extends State<ChatPage> {
       var serialData = (messages.last.text.replaceAll("	" , " ").replaceAll(",", " ").toString());
       data2Double.add(serialData);
       parsed = data2Double.last.split(" ");
+
+      csv.add(parsed.last);
+      csv2.add(csv);
     }
 
     // array of separated strings

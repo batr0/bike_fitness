@@ -1,7 +1,9 @@
+import 'package:bike_fitness/btserial/example/ChatPage.dart';
 import 'package:bike_fitness/csv/lib/loadCsvDataScreen.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import '../../dataparser.dart';
 
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
@@ -62,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             MaterialButton(
               onPressed: () {
-                generateCsv();
+                generateCsv(csv2);
               },
               color: Colors.yellow[700],
               child: Text("Load Created csv"),
@@ -73,9 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  generateCsv() async {
-    List<List<String>> data = [
-    ];
+  generateCsv(List<List<dynamic>> data) async {
     String csvData = ListToCsvConverter().convert(data);
     final String directory = (await getApplicationSupportDirectory()).path;
     final path = "$directory/csv-${DateTime.now()}.csv";
