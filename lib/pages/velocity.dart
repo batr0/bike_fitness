@@ -9,9 +9,9 @@ import 'package:bike_fitness/widgets/map_elevation.dart';
 import '../heatmap.dart';
 
 
-class MyHomePage extends StatefulWidget {
-  static const String route = 'zdata';
-  MyHomePage({Key key, this.title}) : super(key: key);
+class velocityPage extends StatefulWidget {
+  static const String route = 'Velocity';
+  velocityPage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -25,10 +25,10 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _velocityPageState createState() => _velocityPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _velocityPageState extends State<velocityPage> {
   ElevationPoint hoverPoint = 	ElevationPoint(30.62734	,	-96.34081667	,	0.06);
 
 
@@ -36,8 +36,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(title: Text('Elevation Data')),
-      drawer: buildDrawer(context, MyHomePage.route),
+      appBar: AppBar(title: Text('Velocity Data')),
+      drawer: buildDrawer(context, velocityPage.route),
 
       body: Stack(children: [
         FlutterMap(
@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
               polylines: [
                 Polyline(
                   // An optional tag to distinguish polylines in callback
-                  points: elevData,
+                  points: velData,
                   color: Colors.blueGrey[800],
                   strokeWidth: 3.0,
                 ),
@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   return true;
                 },
                 child: Elevation(
-                  elevData,
+                  velData,
                   color: Colors.blueGrey[50],
                   elevationGradientColors: ElevationGradientColors(
                       gt10: Colors.pink[200],

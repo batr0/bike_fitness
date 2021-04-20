@@ -38,10 +38,14 @@ class _ElevationState extends State<Elevation> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (BuildContext context, BoxConstraints bc) {
       Offset _lbPadding = Offset(35, 6);
-      _ElevationPainter elevationPainter = _ElevationPainter(widget.points,
-          paintColor: widget.color,
-          elevationGradientColors: widget.elevationGradientColors,
-          lbPadding: _lbPadding);
+      _ElevationPainter elevationPainter;
+
+      if(widget!=null && widget.points.length>0){ // catches velocity and elevation bad state error
+         elevationPainter = _ElevationPainter(widget.points,
+            paintColor: widget.color,
+            elevationGradientColors: widget.elevationGradientColors,
+            lbPadding: _lbPadding);
+      }
       return GestureDetector(
           onHorizontalDragUpdate: (DragUpdateDetails details) {
             ElevationPoint pointFromPosition = elevationPainter

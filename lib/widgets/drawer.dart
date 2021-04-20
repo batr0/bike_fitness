@@ -16,6 +16,7 @@ import '../pages/plugin_scalebar.dart';
 import '../pages/polyline.dart';
 import '../pages/tap_to_add.dart';
 import '../pages/zdata.dart';
+import '../pages/velocity.dart';
 
 Drawer buildDrawer(BuildContext context, String currentRoute) {
   return Drawer(
@@ -57,10 +58,17 @@ Drawer buildDrawer(BuildContext context, String currentRoute) {
           },
         ),
         ListTile(
-          title: const Text('Z Data'),
+          title: const Text('Elevation Data'),
           selected: currentRoute == MyHomePage.route,
           onTap: () {
             Navigator.pushReplacementNamed(context, MyHomePage.route);
+          },
+        ),
+        ListTile(
+          title: const Text('Velocity Data'),
+          selected: currentRoute == MyHomePage.route,
+          onTap: () {
+            Navigator.pushReplacementNamed(context, velocityPage.route);
           },
         ),
         ListTile(

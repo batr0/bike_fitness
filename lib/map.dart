@@ -1,3 +1,4 @@
+import 'package:bike_fitness/pages/velocity.dart';
 import 'package:flutter/material.dart';
 
 import './pages/animated_map_controller.dart';
@@ -38,7 +39,8 @@ class MapDisplay extends StatelessWidget {
     TapToAddPage.route: (context) => TapToAddPage(),
     EsriPage.route: (context) => EsriPage(),
     PolylinePage.route: (context) => PolylinePage(),
-    MyHomePage.route: (context) => MyHomePage(),
+    MyHomePage.route: (context) => MyHomePage(), // ZDATA ELEVATIONM
+    velocityPage.route: (context) => velocityPage(), //ZDATA VELOCITY
     MapControllerPage.route: (context) => MapControllerPage(),
     AnimatedMapControllerPage.route: (context) => AnimatedMapControllerPage(),
     MarkerAnchorPage.route: (context) => MarkerAnchorPage(),
