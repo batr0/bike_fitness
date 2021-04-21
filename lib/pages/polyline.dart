@@ -54,17 +54,17 @@ class PolylinePage extends StatelessWidget {
                     child: Column(
                         children: [
                           Text(
-                            'Sensor Data from ESP32 ',
+                            'Post-Ride Data ',
                             style: TextStyle(fontSize: 18, color: Colors.purple),
                           ),
-                          Text(
+                         /* Text(
                             'WEB to MSC ',
                             style: TextStyle(fontSize: 18, color:Colors.redAccent[200]),
                           ),
                           Text(
                             'Bike Raw Sensor Data Test',
                             style: TextStyle(fontSize: 18, color: Colors.teal[200]),
-                          ),
+                          ),*/
                         ]
                     )
                 )

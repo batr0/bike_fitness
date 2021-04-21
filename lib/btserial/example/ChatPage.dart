@@ -62,7 +62,9 @@ Stream<String> extTempStream() async* {
 
 Stream<String> altStream() async* {
   yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
-    return parsed[6]; //speed
+    var alt = double.parse(parsed[6]).toDouble();
+    double ele = alt;
+    return ele.toStringAsFixed(0);//speed
   });
   speedStream().asBroadcastStream();
 }//done
@@ -91,12 +93,13 @@ Stream<String> cardStream() async* {
 Stream<String> powerStream() async* {
   yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
     var x = double.parse(parsed[5]).toDouble();
-    if(x==0){
+    if(x<2.9){
       return 0.toString();
     }
     else{
       double y =  2.4974*log(x) - 2.643;
-      return y.toStringAsFixed(2); //speed
+        return y.toStringAsFixed(2);
+      //speed
     }});
   speedStream().asBroadcastStream();
 } //done
@@ -269,7 +272,7 @@ class _ChatPage extends State<ChatPage> {
       data2Double.add(serialData);
       parsed = data2Double.last.split(" ");
 
-      csv.add(parsed.last);
+      csv.add(parsed);
       csv2.add(csv);
     }
 
