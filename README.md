@@ -4,6 +4,7 @@ Group 47 Bike Phone Application
 
 ## Getting Started
 
+Download final_release_bike_fitness.apk from the bike_fitness/ folder
 
 This is the Support Page for the bike_fitness app, currently under construction!
 
@@ -26,13 +27,17 @@ This app uses:
 
 ### Rides
 -After ride, generate CSV by tapping " Load created Csv"
+
 -Will pull up current data stored for ride
+
 -"load all csv from phone storage" will pull up all previous rides with timestamped file
 
 
 ### Maps
 -Post ride, route will be displayed on map
+
 -For Eleveation Layout, hit settings bar, and click "Elevation Data". This displays Eleveation data at a certain GPS lat, long
+
 -For Velocity Layout, hit settings bar, and click "Velocity Data". This displays Velocity data at a certain GPS lat, long
 
 
