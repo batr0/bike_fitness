@@ -24,7 +24,7 @@ This app uses:
 -Flutter Bluetooth Serial plugin, Click "Connect to paired device chat"
 -Choose ESP32 as device, Live Display will load and wait for BT connection
 
-###Rides
+### Rides
 -After ride, generate CSV by tapping " Load created Csv"
 -Will pull up current data stored for ride
 -"load all csv from phone storage" will pull up all previous rides with timestamped file
