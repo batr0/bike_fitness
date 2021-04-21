@@ -12,14 +12,79 @@ import '../../dataparser.dart';
 import '../../graphs.dart';
 
 dynamic  parsed = [];
-
+Stopwatch duration = new Stopwatch();
 
 Stream<String> speedStream() async* {
   yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
     return parsed[5]; //speed
   });
   speedStream().asBroadcastStream();
+}//done
+
+Stream<String> durationStream() async* {
+  yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
+    String _printDuration(Duration duration) {
+      String twoDigits(int n) => n.toString().padLeft(2, "0");
+      String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+      String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+      return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+    }
+
+  return _printDuration((duration.elapsed)).toString();
+  });
+  speedStream().asBroadcastStream();
 }
+
+Stream<String> rpmStream() async* {
+  yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
+    return parsed[15]; //speed
+  });
+  speedStream().asBroadcastStream();
+}//done
+
+Stream<String> inTempStream() async* {
+  yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
+    var c = double.parse(parsed[17]).toDouble();
+    double f = c * (9/5)+32;
+    return f.toStringAsFixed(2); //speed
+  });
+  speedStream().asBroadcastStream();
+} //done
+
+Stream<String> extTempStream() async* {
+  yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
+    return parsed[14]; //speed
+  });
+  speedStream().asBroadcastStream();
+}//done
+
+Stream<String> altStream() async* {
+  yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
+    return parsed[6]; //speed
+  });
+  speedStream().asBroadcastStream();
+}//done
+
+Stream<String> accelStream() async* {
+  yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
+    return parsed[19]; //speed
+  });
+  speedStream().asBroadcastStream();
+}
+
+Stream<String> satStream() async* {
+  yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
+    return parsed[16]; //speed
+  });
+  speedStream().asBroadcastStream();
+}//done
+
+Stream<String> cardStream() async* {
+  yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
+    return parsed[7]; //speed
+  });
+  speedStream().asBroadcastStream();
+}//done
 
 Stream<String> powerStream() async* {
   yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
@@ -32,14 +97,14 @@ Stream<String> powerStream() async* {
     return y.toStringAsFixed(2); //speed
   }});
   speedStream().asBroadcastStream();
-}
+} //done
 
 Stream<String> tempStream() async* {
   yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
     return parsed[14]; // temperature
   });
   tempStream().asBroadcastStream();
-}
+}//done
 
 Stream<String> gpsStream() async* {
   yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
@@ -88,7 +153,7 @@ Stream<String> gpsStream() async* {
 
   });
   tempStream().asBroadcastStream();
-}
+}//done
 
 //set the
 
@@ -215,75 +280,572 @@ class _ChatPage extends State<ChatPage> {
     //debugPrint("D~" + parsed.toString());
 
     return Scaffold(
-      appBar: AppBar(
-          title: (isConnecting
-              ? Text('Connecting chat to ' + widget.server.name + '...')
-              : isConnected
-              ? Text('Live chat with ' + widget.server.name)
-              : Text('Chat log with ' + widget.server.name))),
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            gridGraph(),
-            /*
-            Flexible(
-              child: ListView(
-                  padding: const EdgeInsets.all(12.0),
-                  controller: listScrollController,
-                  children: list),
+            //This is the TOP level - MPH, Miles, Duration
+            Container(
+              height: 150,
+              width: 1000,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                        height: 120,
+                        width: 1,
+                        child: Column(children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: FittedBox(
+                                alignment: Alignment.bottomCenter,
+                                fit: BoxFit.contain,
+                                child: StreamBuilder<String>(
+                                  stream: speedStream(),
+                                  initialData: '0',
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return Container(
+                                          child: CircularProgressIndicator(),
+                                          width: 60,
+                                          height: 60,
+                                          padding: EdgeInsets.all(10));
+                                    } else if (snapshot.hasError) {
+                                      return Text("Error");
+                                    } else {
+                                      return Text(snapshot.data,
+                                          style: TextStyle(
+                                              color: Colors.yellow[700]));
+                                    }
+                                  },
+                                )),
+                          ),
+                          Expanded(
+                            child: Text(
+                              "MPH",
+                              style: TextStyle(
+                                  color: Colors.blueGrey[50], fontSize: 30),
+                            ),
+                          ),
+                        ])),
+                  ),
+                  Expanded(
+                    child: Container(
+                        height: 120,
+                        width: 1,
+                        child: Column(children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: FittedBox(
+                                alignment: Alignment.bottomCenter,
+                                fit: BoxFit.contain,
+                                child: StreamBuilder<String>(
+                                  stream: gpsStream(),
+                                  initialData: '0',
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return Container(
+                                          child: CircularProgressIndicator(),
+                                          width: 60,
+                                          height: 60,
+                                          padding: EdgeInsets.all(10));
+                                    } else if (snapshot.hasError) {
+                                      return Text("Error");
+                                    } else {
+                                      return Text(snapshot.data,
+                                          style: TextStyle(
+                                              color: Colors.yellow[700]));
+                                    }
+                                  },
+                                )),
+                          ),
+                          Expanded(
+                            child: Text(
+                              "Miles",
+                              style: TextStyle(
+                                  color: Colors.blueGrey[50], fontSize: 30),
+                            ),
+                          ),
+                        ])),
+                  ),
+                  Expanded(
+                    child: Container(
+                        height: 120,
+                        width: 1,
+                        child: Column(children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: FittedBox(
+                                alignment: Alignment.bottomCenter,
+                                fit: BoxFit.contain,
+                                child: StreamBuilder<String>(
+                                  stream: durationStream(),
+                                  initialData: '0',
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return Container(
+                                          child: CircularProgressIndicator(),
+                                          width: 60,
+                                          height: 60,
+                                          padding: EdgeInsets.all(10));
+                                    } else if (snapshot.hasError) {
+                                      return Text("Error");
+                                    } else {
+                                      return Text(snapshot.data,
+                                          style: TextStyle(
+                                              color: Colors.yellow[700]));
+                                    }
+                                  },
+                                )),
+                          ),
+                          Expanded(
+                            child: Text(
+                              "Duration",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.blueGrey[50], fontSize: 30),
+                            ),
+                          ),
+                        ])),
+                  ),
+                ],
+              ),
+            ),//speed mph
+            Container(
+              child: Card(
+                color: Colors.grey,
+              ),
+              height:20,
+              width:1000,
             ),
-            */
+            //This is the MID - Temp, RPM, Watts
+            Container(
+              height: 100,
+              width: 1000,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                        height: 100,
+                        width: 1,
+                        child: Row(children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: FittedBox(
+                                alignment: Alignment.bottomCenter,
+                                fit: BoxFit.contain,
+                                child: StreamBuilder<String>(
+                                  stream: powerStream(),
+                                  initialData: '0',
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return Container(
+                                          child: CircularProgressIndicator(),
+                                          width: 60,
+                                          height: 60,
+                                          padding: EdgeInsets.all(10));
+                                    } else if (snapshot.hasError) {
+                                      return Text("Error");
+                                    } else {
+                                      return Text(snapshot.data,
+                                          style: TextStyle(
+                                              color: Colors.yellow[700]));
+                                    }
+                                  },
+                                )),
+                          ),
+                          Expanded(
+                            child: Text(
+                              "Watts",
+                              style: TextStyle(
+                                  color: Colors.blueGrey[50], fontSize: 29),
+                            ),
+                          ),
+                        ])),
+                  ),
+                  Expanded(
+                    child: Container(
+                        height: 120,
+                        width: 1,
+                        child: Row(children: <Widget>[
+                          Expanded(
+                            child: FittedBox(
+                                alignment: Alignment.bottomCenter,
+                                fit: BoxFit.contain,
+                                child: StreamBuilder<String>(
+                                  stream: rpmStream(),
+                                  initialData: '0',
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return Container(
+                                          child: CircularProgressIndicator(),
+                                          width: 60,
+                                          height: 60,
+                                          padding: EdgeInsets.all(10));
+                                    } else if (snapshot.hasError) {
+                                      return Text("Error");
+                                    } else {
+                                      return Text(snapshot.data,
+                                          style: TextStyle(
+                                              color: Colors.yellow[700]));
+                                    }
+                                  },
+                                )),
+                          ),
+                          Expanded(
+                            child: Text(
+                              "RPM",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.blueGrey[50], fontSize: 29),
+                            ),
+                          ),
+                        ])),
+                  ),
+                ],
+              ),
+            ), // power
+            Container(
+              child: Card(
+                color: Colors.grey,
+              ),
+              height:20,
+              width:1000,
+            ),
+            //This is the MESS....
+            Container(
+              height: 50,
+              width: 1000,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                        height: 100,
+                        width: 1,
+                        child: Row(children: <Widget>[
+                          Expanded(
+                            child: Container(
+                              height:100,
+                              width: 2,
+                              child: FittedBox(
+                                child: StreamBuilder<String>(
+                                  stream: inTempStream(),
+                                  initialData: '0',
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return Container(
+                                          child: CircularProgressIndicator(),
+                                          width: 60,
+                                          height: 60,
+                                          padding: EdgeInsets.all(10));
+                                    } else if (snapshot.hasError) {
+                                      return Text("Error");
+                                    } else {
+                                      return Text(snapshot.data,
+                                          style: TextStyle(
+                                              color: Colors.yellow[700]));
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              "Internal Temp",
+                              style: TextStyle(
+                                  color: Colors.blueGrey[50], fontSize: 25),
+                            ),
+                          ),
+                        ])),
+                  ),
+                  Expanded(
+                    child: Container(
+                        height: 120,
+                        width: 1,
+                        child: Row(children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              "External Temp",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.blueGrey[50], fontSize: 25),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              height:100,
+                              width: 2,
+                              child: FittedBox(
+                                child: StreamBuilder<String>(
+                                  stream: extTempStream(),
+                                  initialData: '0',
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return Container(
+                                          child: CircularProgressIndicator(),
+                                          width: 60,
+                                          height: 60,
+                                          padding: EdgeInsets.all(10));
+                                    } else if (snapshot.hasError) {
+                                      return Text("Error");
+                                    } else {
+                                      return Text(snapshot.data,
+                                          style: TextStyle(
+                                              color: Colors.yellow[700]));
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+
+                        ])),
+                  ),//external
+                ],
+              ),
+            ), // internal temp
+            Container(
+              height: 50,
+              width: 1000,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                        height: 100,
+                        width: 1,
+                        child: Row(children: <Widget>[
+                          Expanded(
+                            child: Container(
+                              height:100,
+                              width: 2,
+                              child: FittedBox(
+                                child: StreamBuilder<String>(
+                                  stream: altStream(),
+                                  initialData: '0',
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return Container(
+                                          child: CircularProgressIndicator(),
+                                          width: 60,
+                                          height: 60,
+                                          padding: EdgeInsets.all(10));
+                                    } else if (snapshot.hasError) {
+                                      return Text("Error");
+                                    } else {
+                                      return Text(snapshot.data,
+                                          style: TextStyle(
+                                              color: Colors.yellow[700]));
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              "Altitude",
+                              style: TextStyle(
+                                  color: Colors.blueGrey[50], fontSize: 25),
+                            ),
+                          ),
+                        ])),
+                  ),
+                  Expanded(
+                    child: Container(
+                        height: 120,
+                        width: 1,
+                        child: Row(children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              "Accel.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.blueGrey[50], fontSize: 25),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              height:100,
+                              width: 2,
+                              child: FittedBox(
+                                child: StreamBuilder<String>(
+                                  stream: accelStream(),
+                                  initialData: '0',
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return Container(
+                                          child: CircularProgressIndicator(),
+                                          width: 60,
+                                          height: 60,
+                                          padding: EdgeInsets.all(10));
+                                    } else if (snapshot.hasError) {
+                                      return Text("Error");
+                                    } else {
+                                      return Text(snapshot.data,
+                                          style: TextStyle(
+                                              color: Colors.yellow[700]));
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+
+                        ])),
+                  ),//acceleration
+                ],
+              ),
+            ), // altitude
+            Container(
+              height: 50,
+              width: 1000,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                        height: 100,
+                        width: 1,
+                        child: Row(children: <Widget>[
+                          Expanded(
+                            child: Container(
+                              height:100,
+                              width: 2,
+                              child: FittedBox(
+                                child: StreamBuilder<String>(
+                                  stream: satStream(),
+                                  initialData: '0',
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return Container(
+                                          child: CircularProgressIndicator(),
+                                          width: 60,
+                                          height: 60,
+                                          padding: EdgeInsets.all(10));
+                                    } else if (snapshot.hasError) {
+                                      return Text("Error");
+                                    } else {
+                                      return Text(snapshot.data,
+                                          style: TextStyle(
+                                              color: Colors.yellow[700]));
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              "Satellite Con.s",
+                              style: TextStyle(
+                                  color: Colors.blueGrey[50], fontSize: 25),
+                            ),
+                          ), //satellite connection
+                        ])),
+                  ),
+                  Expanded(
+                    child: Container(
+                        height: 120,
+                        width: 1,
+                        child: Row(children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              "Card. Direction",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.blueGrey[50], fontSize: 25),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              height:100,
+                              width: 2,
+                              child: FittedBox(
+                                child: StreamBuilder<String>(
+                                  stream: cardStream(),
+                                  initialData: '0',
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return Container(
+                                          child: CircularProgressIndicator(),
+                                          width: 60,
+                                          height: 60,
+                                          padding: EdgeInsets.all(10));
+                                    } else if (snapshot.hasError) {
+                                      return Text("Error");
+                                    } else {
+                                      return Text(snapshot.data,
+                                          style: TextStyle(
+                                              color: Colors.yellow[700]));
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+
+                        ])),
+                  ), //card Direction
+                ],
+              ),
+            ),//satellite
+            Container(
+              child: Card(
+                color: Colors.grey,
+              ),
+              height:20,
+              width:1000,
+            ),
 
 
             Wrap(
+              spacing: 35,
               children: <Widget>[
                 RaisedButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(8.0),
                   ),
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.all(5.0),
                   color: Colors.pink[700],
                   child: Column(
                     children: <Widget>[
-                      Icon(Icons.stop,size: 45),
-                      Text('End Ride',textScaleFactor: 1.25),
+                      Icon(Icons.stop, size: 45),
+                      Text('End Ride', textScaleFactor: 1.25),
                     ],
                   ),
-                  onPressed: () => _sendMessage('b'),
+                  onPressed: () => [_sendMessage('b'),duration.stop()],
                 ),
                 RaisedButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(8.0),
                   ),
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.all(5.0),
                   color: Colors.blueGrey[300],
                   child: Column(
                     children: <Widget>[
-                      Icon(Icons.trip_origin,size:45),
-                      Text('Reset Data',textScaleFactor: 1.25),
+                      Icon(Icons.trip_origin, size: 45),
+                      Text('Reset Data', textScaleFactor: 1.25),
                     ],
                   ),
-                  onPressed: () => reset(parsed) ,
+                  onPressed: () => [reset(parsed),duration.reset()],
                 ),
                 //reset button
                 RaisedButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(8.0),
                   ),
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.all(5.0),
                   color: Colors.yellow[700],
                   child: Column(
                     children: <Widget>[
-                      Icon(Icons.send,size:45),
-                      Text('Start Ride',textScaleFactor: 1.25),
+                      Icon(Icons.send, size: 45),
+                      Text('Start Ride', textScaleFactor: 1.25),
                     ],
                   ),
-                  onPressed: () => _sendMessage('h') ,
+                  onPressed: () => [_sendMessage('h'), duration.start()],
                 ),
               ],
             ),
-
-
             Row(
               children: <Widget>[
                 Flexible(
@@ -296,9 +858,9 @@ class _ChatPage extends State<ChatPage> {
                         hintText: isConnecting
                             ? 'Wait until connected...'
                             : isConnected
-                            ? 'Type your message...'
+                            ? 'Connection Established'
                             : 'Chat got disconnected',
-                        hintStyle: const TextStyle(color: Colors.grey),
+                        hintStyle: const TextStyle(color: Colors.white),
                       ),
                       enabled: isConnected,
                     ),
@@ -306,12 +868,6 @@ class _ChatPage extends State<ChatPage> {
                 ),
                 Container(
                   margin: const EdgeInsets.all(8.0),
-                  child: IconButton(
-                      icon: const Icon(Icons.send),
-                      onPressed: isConnected
-                          ? () => _sendMessage(textEditingController.text)
-                          : null),
-                  // text h working, buttons not so much
                 ),
               ],
             )
