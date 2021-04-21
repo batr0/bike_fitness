@@ -30,7 +30,7 @@ Stream<String> durationStream() async* {
       return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
     }
 
-  return _printDuration((duration.elapsed)).toString();
+    return _printDuration((duration.elapsed)).toString();
   });
   speedStream().asBroadcastStream();
 }
@@ -46,14 +46,16 @@ Stream<String> inTempStream() async* {
   yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
     var c = double.parse(parsed[17]).toDouble();
     double f = c * (9/5)+32;
-    return f.toStringAsFixed(2); //speed
+    return f.toStringAsFixed(0); //speed
   });
   speedStream().asBroadcastStream();
 } //done
 
 Stream<String> extTempStream() async* {
   yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
-    return parsed[14]; //speed
+    var c = double.parse(parsed[14]).toDouble();
+    double f = c;
+    return f.toStringAsFixed(0); //speed0
   });
   speedStream().asBroadcastStream();
 }//done
@@ -88,14 +90,14 @@ Stream<String> cardStream() async* {
 
 Stream<String> powerStream() async* {
   yield* Stream.periodic(Duration(milliseconds: 10), (int a) {
-  var x = double.parse(parsed[5]).toDouble();
-  if(x==0){
-    return 0.toString();
-  }
-  else{
-  double y =  2.4974*log(x) - 2.643;
-    return y.toStringAsFixed(2); //speed
-  }});
+    var x = double.parse(parsed[5]).toDouble();
+    if(x==0){
+      return 0.toString();
+    }
+    else{
+      double y =  2.4974*log(x) - 2.643;
+      return y.toStringAsFixed(2); //speed
+    }});
   speedStream().asBroadcastStream();
 } //done
 
@@ -280,7 +282,7 @@ class _ChatPage extends State<ChatPage> {
     //debugPrint("D~" + parsed.toString());
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.blueGrey[900],
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -329,6 +331,13 @@ class _ChatPage extends State<ChatPage> {
                           ),
                         ])),
                   ),
+                  Container(
+                    child: Card(
+                      color: Colors.grey,
+                    ),
+                    height:200,
+                    width:10,
+                  ),
                   Expanded(
                     child: Container(
                         height: 120,
@@ -367,6 +376,13 @@ class _ChatPage extends State<ChatPage> {
                             ),
                           ),
                         ])),
+                  ),
+                  Container(
+                    child: Card(
+                      color: Colors.grey,
+                    ),
+                    height:200,
+                    width:10,
                   ),
                   Expanded(
                     child: Container(
@@ -458,10 +474,17 @@ class _ChatPage extends State<ChatPage> {
                             child: Text(
                               "Watts",
                               style: TextStyle(
-                                  color: Colors.blueGrey[50], fontSize: 29),
+                                  color: Colors.blueGrey[50], fontSize: 28),
                             ),
                           ),
                         ])),
+                  ),
+                  Container(
+                    child: Card(
+                      color: Colors.grey,
+                    ),
+                    height:200,
+                    width:10,
                   ),
                   Expanded(
                     child: Container(
@@ -497,7 +520,7 @@ class _ChatPage extends State<ChatPage> {
                               "RPM",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: Colors.blueGrey[50], fontSize: 29),
+                                  color: Colors.blueGrey[50], fontSize: 28),
                             ),
                           ),
                         ])),
@@ -806,7 +829,7 @@ class _ChatPage extends State<ChatPage> {
                     borderRadius: new BorderRadius.circular(8.0),
                   ),
                   padding: EdgeInsets.all(5.0),
-                  color: Colors.pink[700],
+                  color: Colors.blueGrey[300],
                   child: Column(
                     children: <Widget>[
                       Icon(Icons.stop, size: 45),
@@ -835,7 +858,7 @@ class _ChatPage extends State<ChatPage> {
                     borderRadius: new BorderRadius.circular(8.0),
                   ),
                   padding: EdgeInsets.all(5.0),
-                  color: Colors.yellow[700],
+                  color: Colors.blueGrey[300],
                   child: Column(
                     children: <Widget>[
                       Icon(Icons.send, size: 45),
